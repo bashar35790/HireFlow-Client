@@ -15,7 +15,9 @@ export interface CreateCompanyPayload {
   location: string;
 }
 
-export type UpdateCompanyPayload = Partial<CreateCompanyPayload>;
+export type UpdateCompanyPayload = Partial<CreateCompanyPayload> & {
+  status?: CompanyStatus;
+};
 
 interface CompanyListResponse {
   data: Company[];

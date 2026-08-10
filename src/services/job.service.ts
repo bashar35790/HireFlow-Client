@@ -50,6 +50,13 @@ export const jobService = {
     return { data: data.data, meta: data.meta! };
   },
 
+  async getMine(companyId?: string): Promise<JobListResponse> {
+    const { data } = await api.get<ApiResponse<Job[]>>("/jobs/mine", {
+      params: companyId ? { companyId } : {},
+    });
+    return { data: data.data, meta: data.meta! };
+  },
+
   async getById(id: string): Promise<Job> {
     const { data } = await api.get<ApiResponse<Job>>(`/jobs/${id}`);
     return data.data;

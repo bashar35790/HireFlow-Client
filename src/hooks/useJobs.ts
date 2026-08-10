@@ -37,6 +37,13 @@ export function useJob(id?: string) {
   });
 }
 
+export function useMyJobs(companyId?: string) {
+  return useQuery({
+    queryKey: [...jobKeys.lists(), "mine", companyId ?? "all"],
+    queryFn: () => jobService.getMine(companyId),
+  });
+}
+
 export function useCreateJob() {
   const queryClient = useQueryClient();
   return useMutation({

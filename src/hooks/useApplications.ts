@@ -23,6 +23,18 @@ export function useMyApplications(page = 1, limit = 10) {
   });
 }
 
+export function useAllApplications(filters: {
+  jobId?: string;
+  status?: ApplicationStatus;
+  page?: number;
+  limit?: number;
+} = {}) {
+  return useQuery({
+    queryKey: [...applicationKeys.all, "all", filters],
+    queryFn: () => applicationService.listAll(filters),
+  });
+}
+
 export function useApplication(id?: string) {
   return useQuery({
     queryKey: applicationKeys.detail(id ?? ""),
