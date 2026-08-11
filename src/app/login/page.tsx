@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Card, Input } from "@heroui/react";
+import { Button, Input, Label } from "@heroui/react";
 import { useAuth, useLogin } from "@/hooks/useAuth";
 import { getErrorMessage } from "@/lib/error-message";
 import { AuthShell } from "@/components/auth/auth-shell";
@@ -42,6 +42,7 @@ function LoginForm() {
   const { user, isLoading: authLoading } = useAuth();
   const login = useLogin();
   const [formError, setFormError] = useState<string | null>(null);
+  const [remember, setRemember] = useState(true);
 
   const {
     register,
@@ -69,64 +70,107 @@ function LoginForm() {
   }
 
   return (
-    <AuthShell>
-      <Card.Header className="flex-col items-start gap-1">
-        <Card.Title className="text-2xl">Welcome back</Card.Title>
-        <Card.Description>Sign in to your HireFlow account</Card.Description>
-      </Card.Header>
-      <Card.Content>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          {formError && (
-            <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-400">
-              {formError}
-            </div>
-          )}
-          <div className="flex flex-col gap-1.5">
-            <Input
-              {...register("email")}
-              type="email"
-              placeholder="you@example.com"
-              aria-label="Email"
-              className="w-full"
-            />
-            {errors.email && (
-              <p className="text-xs text-red-600">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Input
-              {...register("password")}
-              type="password"
-              placeholder="Password"
-              aria-label="Password"
-              className="w-full"
-            />
-            {errors.password && (
-              <p className="text-xs text-red-600">{errors.password.message}</p>
-            )}
-          </div>
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            fullWidth
-            isDisabled={login.isPending}
-          >
-            {login.isPending ? "Signing in…" : "Sign in"}
-          </Button>
-        </form>
-      </Card.Content>
-      <Card.Footer className="justify-center">
+    <AuthShell
+      eyebrow="Welcome back"
+      title="Sign in to your account"
+      description="Welcome back to HireFlow. Sign in to unlock premium roles, exclusive opportunities and your personalized career dashboard."
+      footer={
         <p className="text-sm text-foreground/60">
-          Don&apos;t have an account?{""}
+          New to HireFlow?{" "}
           <Link
             href="/register"
-            className="font-medium text-foreground underline"
+            className="font-semibold text-primary transition-colors hover:text-primary-hover"
           >
-            Register
+            Create an account
           </Link>
         </p>
-      </Card.Footer>
+      }
+    >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        {formError && (
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-950/50 dark:bg-red-950/40 dark:text-red-400">
+            {formError}
+          </div>
+        )}
+
+        <div className="flex flex-col gap-2">
+          <Label className="text-xs font-semibold uppercase tracking-widest text-foreground/60">
+            Email
+          </Label>
+          <Input
+            {...register("email")}
+            type="email"
+            placeholder="you@example.com"
+            aria-label="Email"
+            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+          />
+          {errors.email && (
+            <p className="text-xs font-medium text-red-600">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <Label className="text-xs font-semibold uppercase tracking-widest text-foreground/60">
+              Password
+            </Label>
+            <button
+              type="button"
+              className="text-xs font-medium text-primary transition-colors hover:text-primary-hover"
+            >
+              Forgot password?
+            </button>
+          </div>
+          <Input
+            {...register("password")}
+            type="password"
+            placeholder="••••••••"
+            aria-label="Password"
+            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+          />
+          {errors.password && (
+            <p className="text-xs font-medium text-red-600">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+
+        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-foreground/70">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+            className="size-4 accent-[#fc5810]"
+          />
+          Keep me signed in
+        </label>
+
+        <Button
+          type="submit"
+          size="lg"
+          fullWidth
+          isDisabled={login.isPending}
+          className="mt-2 rounded-full bg-gradient-to-r from-primary to-[#f04c24] font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98]"
+        >
+          {login.isPending ? "Signing in…" : "Sign In"}
+        </Button>
+
+        <div className="flex items-center gap-4 py-1">
+          <span className="h-px flex-1 bg-gradient-to-r from-transparent to-foreground/10" />
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-foreground/40">
+            Private Access
+          </span>
+          <span className="h-px flex-1 bg-gradient-to-l from-transparent to-foreground/10" />
+        </div>
+
+        <p className="text-center text-xs font-light leading-relaxed text-foreground/50">
+          By signing in, you agree to our{" "}
+          <span className="font-medium text-primary">Terms</span> and{" "}
+          <span className="font-medium text-primary">Privacy Policy</span>.
+        </p>
+      </form>
     </AuthShell>
   );
 }
