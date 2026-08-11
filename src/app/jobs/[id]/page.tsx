@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Button, Card, Chip } from "@heroui/react";
+import { Button } from "@heroui/react";
+import { motion } from "framer-motion";
 import { useJob } from "@/hooks/useJobs";
 import { useAuth } from "@/hooks/useAuth";
 import { JobStatusChip } from "@/components/jobs/status-chips";
@@ -15,7 +16,7 @@ import {
   JOB_STATUS_LABEL,
   JOB_TYPES_MAP,
 } from "@/lib/constants";
-import { formatSalary, formatDate } from "@/lib/format";
+import { formatSalary, timeAgo } from "@/lib/format";
 import { useMyApplications } from "@/hooks/useApplications";
 
 export default function JobDetailPage() {
@@ -32,138 +33,186 @@ export default function JobDetailPage() {
   const application = myApps?.data.find((a) => a.jobId === params.id);
 
   if (isLoading || (authLoading && !job)) {
-    return <Loading />;
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <Loading />
+      </div>
+    );
   }
 
   if (isError || !job) {
-    return <ErrorState message="Job not found." onRetry={() => refetch()} />;
+    return (
+      <div className="mt-10">
+        <ErrorState message="Job not found." onRetry={() => refetch()} />
+      </div>
+    );
   }
 
   const alreadyApplied = Boolean(application);
   const checksPending = Boolean(user) && appsLoading && !myApps;
 
   return (
-    <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
-      <div className="mb-4 text-sm text-foreground/60">
+    <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-12 sm:px-6 lg:py-16">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="mb-8"
+      >
         <Link
           href="/jobs"
-          className="hover:text-foreground dark:hover:text-foreground/10"
+          className="group inline-flex items-center text-sm font-medium text-foreground/60 transition-colors hover:text-primary"
         >
-          ← Back to jobs
+          <span className="mr-2 transition-transform group-hover:-translate-x-1">
+            ←
+          </span>
+          Back to Collection
         </Link>
-      </div>
+      </motion.div>
 
-      <Card variant="secondary">
-        <Card.Header className="gap-4">
-          <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-foreground/10 text-xl font-bold text-foreground/70">
-            {job.company?.name?.[0] ?? "J"}
-          </div>
-          <div className="min-w-0 flex-1">
-            <h1 className="text-2xl font-bold text-foreground">{job.title}</h1>
-            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-foreground/60">
-              <Link
-                href={`/companies/${job.companyId}`}
-                className="font-medium text-foreground/80 hover:underline"
-              >
-                {job.company?.name ?? "Unknown company"}
-              </Link>
-              <span>·</span>
-              <span>{job.location}</span>
-              <span>·</span>
-              <span>Posted {formatDate(job.createdAt)}</span>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="glass relative overflow-hidden rounded-3xl"
+      >
+        {/* Decorative subtle background elements */}
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+
+        <div className="relative p-6 sm:p-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 text-3xl font-bold text-primary shadow-inner">
+                {job.company?.name?.[0] ?? "J"}
+              </div>
+              <div>
+                <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+                  {job.title}
+                </h1>
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-medium text-foreground/70">
+                  <Link
+                    href={`/companies/${job.companyId}`}
+                    className="text-foreground transition-colors hover:text-primary hover:underline"
+                  >
+                    {job.company?.name ?? "Exclusive Partner"}
+                  </Link>
+                  <span className="h-1 w-1 rounded-full bg-foreground/30" />
+                  <span>{job.location}</span>
+                  <span className="h-1 w-1 rounded-full bg-foreground/30" />
+                  <span>Posted {timeAgo(job.createdAt)}</span>
+                </div>
+              </div>
+            </div>
+            <div className="shrink-0">
+              <JobStatusChip status={job.status}>
+                {JOB_STATUS_LABEL[job.status]}
+              </JobStatusChip>
             </div>
           </div>
-          <JobStatusChip status={job.status}>
-            {JOB_STATUS_LABEL[job.status]}
-          </JobStatusChip>
-        </Card.Header>
 
-        <Card.Content className="gap-5">
-          <div className="flex flex-wrap gap-2">
-            <Chip size="sm" variant="soft">
-              {job.category?.name ?? "General"}
-            </Chip>
-            <Chip size="sm" variant="soft">
+          <div className="mt-8 flex flex-wrap gap-3">
+            <span className="inline-flex items-center rounded-full bg-foreground/5 px-4 py-1.5 text-sm font-medium text-foreground/80 border border-foreground/10">
+              {job.category?.name ?? "Premium Role"}
+            </span>
+            <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/20">
               {JOB_TYPES_MAP[job.jobType] ?? job.jobType}
-            </Chip>
+            </span>
             {job.experienceLevel && (
-              <Chip size="sm" variant="soft">
+              <span className="inline-flex items-center rounded-full bg-foreground/5 px-4 py-1.5 text-sm font-medium text-foreground/80 border border-foreground/10">
                 {EXPERIENCE_LEVELS_MAP[job.experienceLevel]}
-              </Chip>
-            )}
-            <Chip size="sm" color="success" variant="soft">
-              {formatSalary(job.salaryMin, job.salaryMax)}
-            </Chip>
-          </div>
-
-          <div>
-            <h2 className="mb-2 text-lg font-semibold text-foreground">
-              Description
-            </h2>
-            <p className="whitespace-pre-line text-foreground/80">
-              {job.description}
-            </p>
-          </div>
-        </Card.Content>
-
-        <Card.Footer className="gap-3">
-          <SaveJobButton jobId={job.id} />
-          {checksPending ? (
-            <Button variant="secondary" isDisabled>
-              Checking…
-            </Button>
-          ) : alreadyApplied ? (
-            <div className="flex flex-col gap-1">
-              <Button variant="secondary" isDisabled>
-                Applied
-              </Button>
-              <span className="text-xs text-foreground/60">
-                Status: {APPLICATION_STATUS_LABEL[application!.status]}
               </span>
+            )}
+            {job.salaryMin != null && (
+              <span className="inline-flex items-center rounded-full bg-[#f04c24]/10 px-4 py-1.5 text-sm font-medium text-[#f04c24] border border-[#f04c24]/20">
+                {formatSalary(job.salaryMin, job.salaryMax)}
+              </span>
+            )}
+          </div>
+
+          <hr className="my-10 border-t border-foreground/10" />
+
+          <div className="max-w-3xl">
+            <h2 className="text-xl font-bold text-foreground mb-4">
+              About the Role
+            </h2>
+            <div className="text-foreground/80 leading-relaxed font-light whitespace-pre-line text-lg">
+              {job.description}
             </div>
-          ) : user?.role === "EMPLOYER" || user?.role === "ADMIN" ? (
-            <Button variant="secondary" isDisabled>
-              Only job seekers can apply
-            </Button>
-          ) : user ? (
-            <Link href={`/jobs/${job.id}/apply`}>
-              <Button variant="primary" size="lg">
-                Apply now
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center gap-4">
+            {checksPending ? (
+              <Button size="lg" className="rounded-full font-medium" isDisabled>
+                Checking status…
               </Button>
-            </Link>
-          ) : (
-            <Link href={`/login?next=/jobs/${job.id}`}>
-              <Button variant="primary" size="lg">
-                Login to apply
+            ) : alreadyApplied ? (
+              <div className="flex items-center gap-3">
+                <Button
+                  size="lg"
+                  className="rounded-full font-medium bg-foreground/10 text-foreground"
+                  isDisabled
+                >
+                  Application Submitted
+                </Button>
+                <span className="text-sm font-medium text-foreground/60">
+                  Status: {APPLICATION_STATUS_LABEL[application!.status]}
+                </span>
+              </div>
+            ) : user?.role === "EMPLOYER" || user?.role === "ADMIN" ? (
+              <Button size="lg" className="rounded-full font-medium" isDisabled>
+                Job Seekers Only
               </Button>
-            </Link>
-          )}
-        </Card.Footer>
-      </Card>
+            ) : user ? (
+              <Link href={`/jobs/${job.id}/apply`}>
+                <Button
+                  size="lg"
+                  className="rounded-full bg-primary font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary-hover hover:-translate-y-0.5"
+                >
+                  Apply Now
+                </Button>
+              </Link>
+            ) : (
+              <Link href={`/login?next=/jobs/${job.id}`}>
+                <Button
+                  size="lg"
+                  className="rounded-full bg-primary font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary-hover hover:-translate-y-0.5"
+                >
+                  Sign In to Apply
+                </Button>
+              </Link>
+            )}
+            <div className="ml-auto">
+              <SaveJobButton jobId={job.id} />
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
       {job.company && (
-        <Card variant="secondary" className="mt-6">
-          <Card.Header>
-            <Card.Title className="text-lg">
-              About {job.company.name}
-            </Card.Title>
-          </Card.Header>
-          <Card.Content className="gap-2">
-            <p className="text-foreground/70">
-              {job.company.description || "No description provided."}
-            </p>
-            {job.company.website && (
-              <a
-                href={job.company.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-foreground underline"
-              >
-                Visit website
-              </a>
-            )}
-          </Card.Content>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-8 glass rounded-3xl p-6 sm:p-10"
+        >
+          <h3 className="text-xl font-bold text-foreground mb-4">
+            About {job.company.name}
+          </h3>
+          <p className="text-foreground/70 leading-relaxed font-light mb-6 text-lg max-w-3xl">
+            {job.company.description ||
+              "Leading the industry with premium standards."}
+          </p>
+          {job.company.website && (
+            <a
+              href={job.company.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center font-medium text-primary transition-colors hover:text-primary-hover"
+            >
+              Visit Company Website
+              <span className="ml-1 text-lg">↗</span>
+            </a>
+          )}
+        </motion.div>
       )}
     </div>
   );
