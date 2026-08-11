@@ -2,7 +2,6 @@
 
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, Input, Label, ListBox, Select } from "@heroui/react";
 import { useJobs } from "@/hooks/useJobs";
 import { useCategories } from "@/hooks/useCategories";
 import { JOB_TYPES } from "@/lib/constants";
@@ -119,103 +118,151 @@ function JobsContent() {
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[280px_1fr]">
-        <aside className="space-y-4">
-          <div className="flex flex-col gap-1.5">
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search title or keyword"
-              aria-label="Search jobs"
-              className="w-full"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Select
-              className="w-full"
-              placeholder="All categories"
-              aria-label="Category"
-              value={category || null}
-              onChange={(value) => setCategory(value ? String(value) : "")}
-            >
-              <Select.Trigger>
-                <Select.Value />
-                <Select.Indicator />
-              </Select.Trigger>
-              <Select.Popover>
-                <ListBox>
-                  {categories?.data.map((c) => (
-                    <ListBox.Item key={c.id} id={c.slug} textValue={c.name}>
-                      {c.name}
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                  ))}
-                </ListBox>
-              </Select.Popover>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location (e.g. Dhaka)"
-              aria-label="Location"
-              className="w-full"
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Select
-              className="w-full"
-              placeholder="All job types"
-              aria-label="Job type"
-              value={jobType || null}
-              onChange={(value) => setJobType(value ? String(value) : "")}
-            >
-              <Select.Trigger>
-                <Select.Value />
-                <Select.Indicator />
-              </Select.Trigger>
-              <Select.Popover>
-                <ListBox>
-                  {JOB_TYPES.map((t) => (
-                    <ListBox.Item
-                      key={t.value}
-                      id={t.value}
-                      textValue={t.label}
-                    >
-                      {t.label}
-                      <ListBox.ItemIndicator />
-                    </ListBox.Item>
-                  ))}
-                </ListBox>
-              </Select.Popover>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-xs font-medium text-foreground/60">
-              Salary range (USD)
-            </Label>
-            <div className="grid grid-cols-2 gap-2">
-              <Input
-                type="number"
-                value={salaryMin}
-                onChange={(e) => setSalaryMin(e.target.value)}
-                placeholder="Min"
-                aria-label="Minimum salary"
-              />
-              <Input
-                type="number"
-                value={salaryMax}
-                onChange={(e) => setSalaryMax(e.target.value)}
-                placeholder="Max"
-                aria-label="Maximum salary"
-              />
+        {/* ── Filter Sidebar ── */}
+        <aside>
+          <div className="sticky top-[88px] rounded-2xl bg-card border border-[var(--card-border)] shadow-sm overflow-hidden">
+            {/* Sidebar header */}
+            <div className="flex items-center justify-between border-b border-[var(--card-border)] px-5 py-4">
+              <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
+                </svg>
+                Filters
+              </span>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="text-xs font-medium text-primary transition-colors hover:text-primary-hover"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-5 px-5 py-5">
+              {/* Search */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-foreground/50">
+                  Keyword
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+                    </svg>
+                  </span>
+                  <input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Title or keyword"
+                    aria-label="Search jobs"
+                    className="w-full rounded-xl border border-[var(--card-border)] bg-background py-2.5 pl-9 pr-3 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+              </div>
+
+              {/* Category */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-foreground/50">
+                  Category
+                </label>
+                <div className="relative">
+                  <select
+                    value={category}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setCategory(v);
+                      pushParams(1, { category: v });
+                    }}
+                    aria-label="Category"
+                    className="w-full appearance-none rounded-xl border border-[var(--card-border)] bg-background py-2.5 pl-3 pr-8 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  >
+                    <option value="">All categories</option>
+                    {categories?.data.map((c) => (
+                      <option key={c.id} value={c.slug}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-foreground/40">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-foreground/50">
+                  Location
+                </label>
+                <input
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="e.g. Dhaka, Remote"
+                  aria-label="Location"
+                  className="w-full rounded-xl border border-[var(--card-border)] bg-background py-2.5 px-3 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                />
+              </div>
+
+              {/* Job Type */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-foreground/50">
+                  Job Type
+                </label>
+                <div className="relative">
+                  <select
+                    value={jobType}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setJobType(v);
+                      pushParams(1, { jobType: v });
+                    }}
+                    aria-label="Job type"
+                    className="w-full appearance-none rounded-xl border border-[var(--card-border)] bg-background py-2.5 pl-3 pr-8 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  >
+                    <option value="">All job types</option>
+                    {JOB_TYPES.map((t) => (
+                      <option key={t.value} value={t.value}>
+                        {t.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-foreground/40">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              {/* Salary Range */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-foreground/50">
+                  Salary (USD)
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    value={salaryMin}
+                    onChange={(e) => setSalaryMin(e.target.value)}
+                    placeholder="Min"
+                    aria-label="Minimum salary"
+                    className="w-full rounded-xl border border-[var(--card-border)] bg-background py-2.5 px-3 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+                  <input
+                    type="number"
+                    value={salaryMax}
+                    onChange={(e) => setSalaryMax(e.target.value)}
+                    placeholder="Max"
+                    aria-label="Maximum salary"
+                    className="w-full rounded-xl border border-[var(--card-border)] bg-background py-2.5 px-3 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          {hasActiveFilters && (
-            <Button variant="ghost" size="sm" fullWidth onPress={clearFilters}>
-              Clear filters
-            </Button>
-          )}
         </aside>
 
         <section>
