@@ -43,6 +43,7 @@ function LoginForm() {
   const login = useLogin();
   const [formError, setFormError] = useState<string | null>(null);
   const [remember, setRemember] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   const {
     register,
@@ -51,12 +52,16 @@ function LoginForm() {
   } = useForm<LoginValues>({ resolver: zodResolver(loginSchema) });
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (!authLoading && user) {
       router.replace(redirectFor(user, next));
     }
   }, [authLoading, user, next, router]);
 
-  if (authLoading) return null;
+  if (!mounted || authLoading) return null;
   if (user) return null;
 
   async function onSubmit(values: LoginValues) {

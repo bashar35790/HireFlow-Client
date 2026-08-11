@@ -90,6 +90,7 @@ export default function RegisterPage() {
   const { user, isLoading: authLoading } = useAuth();
   const register = useRegister();
   const [formError, setFormError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const {
     register: registerField,
@@ -105,6 +106,10 @@ export default function RegisterPage() {
   const role = watch("role");
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (!authLoading && user) {
       router.replace(
         user.role === "ADMIN"
@@ -116,7 +121,7 @@ export default function RegisterPage() {
     }
   }, [authLoading, user, router]);
 
-  if (authLoading) return null;
+  if (!mounted || authLoading) return null;
   if (user) return null;
 
   async function onSubmit(values: RegisterValues) {
