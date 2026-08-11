@@ -10,6 +10,7 @@ import { useMyJobs, useDeleteJob } from "@/hooks/useJobs";
 import { useAllApplications, useUpdateApplicationStatus } from "@/hooks/useApplications";
 import { useReviews, useDeleteReview } from "@/hooks/useReviews";
 import { Loading } from "@/components/shared/loading";
+import { ErrorState } from "@/components/shared/error-state";
 import {
   APPLICATION_STATUS_LABEL,
   companyStatusChipColor,
@@ -83,11 +84,18 @@ function AdminDashboard() {
 }
 
 function Overview() {
-  const { data: users } = useUsers(1, 1);
-  const { data: companies } = useCompanies({ limit: 1 });
-  const { data: jobs } = useMyJobs();
-  const { data: apps } = useAllApplications({ limit: 1 });
-  const { data: reviews } = useReviews();
+  const { data: users, isLoading: usersLoading, isError: usersError } = useUsers(1, 1);
+  const { data: companies, isLoading: companiesLoading, isError: companiesError } = useCompanies({ limit: 1 });
+  const { data: jobs, isLoading: jobsLoading, isError: jobsError } = useMyJobs();
+  const { data: apps, isLoading: appsLoading, isError: appsError } = useAllApplications({ limit: 1 });
+  const { data: reviews, isLoading: reviewsLoading, isError: reviewsError } = useReviews();
+
+  if (usersLoading || companiesLoading || jobsLoading || appsLoading || reviewsLoading) {
+    return <Loading />;
+  }
+  if (usersError || companiesError || jobsError || appsError || reviewsError) {
+    return <ErrorState message="Failed to load dashboard stats." />;
+  }
 
   const stats = [
     { label: "Users", value: users?.meta.total ?? "—" },
@@ -151,11 +159,12 @@ function DataTable<T>({ columns, data, empty }: { columns: Column<T>[]; data: T[
 }
 
 function UsersTab() {
-  const { data, isLoading, refetch } = useUsers(1, 50);
+  const { data, isLoading, isError, refetch } = useUsers(1, 50);
   const updateUser = useUpdateUser();
   const deleteUser = useDeleteUser();
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load users." onRetry={() => refetch()} />;
 
   const columns: Column<User>[] = [
     { key: "name", header: "Name", render: (u) => <span className="font-medium text-zinc-900 dark:text-zinc-50">{u.name}</span> },
@@ -194,11 +203,12 @@ function UsersTab() {
 }
 
 function CompaniesTab() {
-  const { data, isLoading } = useCompanies({ limit: 100 });
+  const { data, isLoading, isError, refetch } = useCompanies({ limit: 100 });
   const updateCompany = useUpdateCompany();
   const deleteCompany = useDeleteCompany();
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load companies." onRetry={() => refetch()} />;
 
   const columns: Column<Company>[] = [
     { key: "name", header: "Name", render: (c) => <span className="font-medium text-zinc-900 dark:text-zinc-50">{c.name}</span> },
@@ -231,10 +241,11 @@ function CompaniesTab() {
 }
 
 function JobsTab() {
-  const { data, isLoading } = useMyJobs();
+  const { data, isLoading, isError, refetch } = useMyJobs();
   const deleteJob = useDeleteJob();
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load jobs." onRetry={() => refetch()} />;
 
   const columns: Column<Job>[] = [
     { key: "title", header: "Title", render: (j) => (
@@ -257,10 +268,11 @@ function JobsTab() {
 }
 
 function ApplicationsTab() {
-  const { data, isLoading } = useAllApplications({ limit: 100 });
+  const { data, isLoading, isError, refetch } = useAllApplications({ limit: 100 });
   const updateStatus = useUpdateApplicationStatus();
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load applications." onRetry={() => refetch()} />;
 
   const columns: Column<Application>[] = [
     { key: "job", header: "Job", render: (a) => <span className="font-medium text-zinc-900 dark:text-zinc-50">{a.job?.title}</span> },
@@ -283,10 +295,11 @@ function ApplicationsTab() {
 }
 
 function ReviewsTab() {
-  const { data, isLoading } = useReviews();
+  const { data, isLoading, isError, refetch } = useReviews();
   const deleteReview = useDeleteReview();
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load reviews." onRetry={() => refetch()} />;
 
   const columns: Column<Review>[] = [
     { key: "company", header: "Company", render: (r) => <span className="font-medium text-zinc-900 dark:text-zinc-50">{r.companyId}</span> },

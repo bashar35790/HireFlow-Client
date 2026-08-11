@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Input } from "@heroui/react";
-import { useLogin } from "@/hooks/useAuth";
+import { useAuth, useLogin } from "@/hooks/useAuth";
 import { getErrorMessage } from "@/lib/error-message";
 import { AuthShell } from "@/components/auth/auth-shell";
 
@@ -18,8 +18,24 @@ const loginSchema = z.object({
 
 type LoginValues = z.infer<typeof loginSchema>;
 
+function redirectFor(user: { role: string }, next?: string | null) {
+  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+  return user.role === "ADMIN" ? "/admin" : user.role === "EMPLOYER" ? "/employer" : "/dashboard";
+}
+
 export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next");
+  const { user, isLoading: authLoading } = useAuth();
   const login = useLogin();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -29,11 +45,17 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginValues>({ resolver: zodResolver(loginSchema) });
 
+  if (authLoading) return null;
+  if (user) {
+    router.replace(redirectFor(user, next));
+    return null;
+  }
+
   async function onSubmit(values: LoginValues) {
     setFormError(null);
     try {
-      const user = await login.mutateAsync(values);
-      router.push(user.role === "ADMIN" ? "/admin" : user.role === "EMPLOYER" ? "/employer" : "/dashboard");
+      const authed = await login.mutateAsync(values);
+      router.push(redirectFor(authed, next));
     } catch (error) {
       setFormError(getErrorMessage(error));
     }

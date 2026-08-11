@@ -23,7 +23,7 @@ type ApplyValues = z.infer<typeof applySchema>;
 
 export default function ApplyPage() {
   return (
-    <RouteGuard>
+    <RouteGuard roles={["JOB_SEEKER"]}>
       <ApplyForm />
     </RouteGuard>
   );

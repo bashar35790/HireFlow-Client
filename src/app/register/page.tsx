@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Input } from "@heroui/react";
-import { useRegister } from "@/hooks/useAuth";
+import { useAuth, useRegister } from "@/hooks/useAuth";
 import { getErrorMessage } from "@/lib/error-message";
 import { AuthShell } from "@/components/auth/auth-shell";
 
@@ -51,6 +51,7 @@ function RoleCard({
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { user, isLoading: authLoading } = useAuth();
   const register = useRegister();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -66,6 +67,12 @@ export default function RegisterPage() {
   });
 
   const role = watch("role");
+
+  if (authLoading) return null;
+  if (user) {
+    router.replace(user.role === "ADMIN" ? "/admin" : user.role === "EMPLOYER" ? "/employer" : "/dashboard");
+    return null;
+  }
 
   async function onSubmit(values: RegisterValues) {
     setFormError(null);

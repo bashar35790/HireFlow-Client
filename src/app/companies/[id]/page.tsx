@@ -26,7 +26,7 @@ export default function CompanyDetailPage() {
   const params = useParams<{ id: string }>();
   const { user } = useAuth();
   const { data: company, isLoading, isError, refetch } = useCompany(params.id);
-  const { data: reviews } = useReviews(params.id);
+  const { data: reviews, isLoading: reviewsLoading, isError: reviewsError, refetch: refetchReviews } = useReviews(params.id);
   const createReview = useCreateReview();
 
   const [rating, setRating] = useState(0);
@@ -160,7 +160,11 @@ export default function CompanyDetailPage() {
           </Card>
         )}
 
-        {reviews && reviews.data.length > 0 ? (
+        {reviewsLoading ? (
+          <Loading />
+        ) : reviewsError ? (
+          <ErrorState message="Failed to load reviews." onRetry={() => refetchReviews()} />
+        ) : reviews && reviews.data.length > 0 ? (
           <div className="flex flex-col gap-4">
             {reviews.data.map((review) => (
               <Card key={review.id} variant="secondary">

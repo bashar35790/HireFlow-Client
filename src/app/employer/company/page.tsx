@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMyCompany } from "@/hooks/useCompanies";
 import { CompanyForm } from "@/components/employer/company-form";
 import { Loading } from "@/components/shared/loading";
+import { ErrorState } from "@/components/shared/error-state";
 import { Button } from "@heroui/react";
 
 export default function CompanyPage() {
@@ -18,9 +19,10 @@ export default function CompanyPage() {
 
 function CompanyManage() {
   const { user } = useAuth();
-  const { data: company, isLoading } = useMyCompany(user?.id);
+  const { data: company, isLoading, isError, refetch } = useMyCompany(user?.id);
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load your company." onRetry={() => refetch()} />;
 
   return (
     <div className="mx-auto w-full max-w-2xl flex-1 px-4 py-10 sm:px-6">

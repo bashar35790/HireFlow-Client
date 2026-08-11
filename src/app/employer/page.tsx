@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMyCompany } from "@/hooks/useCompanies";
 import { useMyJobs } from "@/hooks/useJobs";
 import { Loading } from "@/components/shared/loading";
+import { ErrorState } from "@/components/shared/error-state";
 import { EmptyState } from "@/components/shared/empty-state";
 import { JobStatusChip } from "@/components/jobs/status-chips";
 import { companyStatusChipColor, JOB_STATUS_LABEL } from "@/lib/constants";
@@ -22,10 +23,12 @@ export default function EmployerDashboardPage() {
 
 function EmployerDashboard() {
   const { user } = useAuth();
-  const { data: company, isLoading: companyLoading } = useMyCompany(user?.id);
-  const { data: myJobs, isLoading: jobsLoading } = useMyJobs(company?.id);
+  const { data: company, isLoading: companyLoading, isError: companyError, refetch: refetchCompany } = useMyCompany(user?.id);
+  const { data: myJobs, isLoading: jobsLoading, isError: jobsError, refetch: refetchJobs } = useMyJobs(company?.id);
 
   if (companyLoading) return <Loading />;
+  if (companyError) return <ErrorState message="Failed to load your company." onRetry={() => refetchCompany()} />;
+  if (jobsError) return <ErrorState message="Failed to load your jobs." onRetry={() => refetchJobs()} />;
 
   if (!company) {
     return (

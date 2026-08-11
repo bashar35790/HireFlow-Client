@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMyCompany } from "@/hooks/useCompanies";
 import { useMyJobs, useDeleteJob } from "@/hooks/useJobs";
 import { Loading } from "@/components/shared/loading";
+import { ErrorState } from "@/components/shared/error-state";
 import { EmptyState } from "@/components/shared/empty-state";
 import { JobStatusChip } from "@/components/jobs/status-chips";
 import { JOB_STATUS_LABEL, JOB_TYPES_MAP } from "@/lib/constants";
@@ -23,12 +24,14 @@ export default function EmployerJobsPage() {
 
 function JobsManage() {
   const { user } = useAuth();
-  const { data: company, isLoading: companyLoading } = useMyCompany(user?.id);
-  const { data: myJobs, isLoading } = useMyJobs(company?.id);
+  const { data: company, isLoading: companyLoading, isError: companyError, refetch: refetchCompany } = useMyCompany(user?.id);
+  const { data: myJobs, isLoading, isError, refetch } = useMyJobs(company?.id);
   const deleteJob = useDeleteJob();
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   if (companyLoading) return <Loading />;
+  if (companyError) return <ErrorState message="Failed to load your company." onRetry={() => refetchCompany()} />;
+  if (isError) return <ErrorState message="Failed to load your jobs." onRetry={() => refetch()} />;
 
   if (!company) {
     return (

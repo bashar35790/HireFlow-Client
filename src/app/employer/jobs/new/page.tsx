@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useMyCompany } from "@/hooks/useCompanies";
 import { JobForm } from "@/components/employer/job-form";
 import { Loading } from "@/components/shared/loading";
+import { ErrorState } from "@/components/shared/error-state";
 import { EmptyState } from "@/components/shared/empty-state";
 
 export default function NewJobPage() {
@@ -17,9 +18,10 @@ export default function NewJobPage() {
 
 function NewJob() {
   const { user } = useAuth();
-  const { data: company, isLoading } = useMyCompany(user?.id);
+  const { data: company, isLoading, isError, refetch } = useMyCompany(user?.id);
 
   if (isLoading) return <Loading />;
+  if (isError) return <ErrorState message="Failed to load your company." onRetry={() => refetch()} />;
 
   if (!company) {
     return (

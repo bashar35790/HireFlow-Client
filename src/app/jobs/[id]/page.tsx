@@ -17,7 +17,7 @@ export default function JobDetailPage() {
   const params = useParams<{ id: string }>();
   const { user, isLoading: authLoading } = useAuth();
   const { data: job, isLoading, isError, refetch } = useJob(params.id);
-  const { data: myApps } = useMyApplications(1, 100);
+  const { data: myApps, isLoading: appsLoading } = useMyApplications(1, 100);
 
   const application = myApps?.data.find((a) => a.jobId === params.id);
 
@@ -30,6 +30,7 @@ export default function JobDetailPage() {
   }
 
   const alreadyApplied = Boolean(application);
+  const checksPending = Boolean(user) && appsLoading && !myApps;
 
   return (
     <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
@@ -90,7 +91,11 @@ export default function JobDetailPage() {
 
         <Card.Footer className="gap-3">
           <SaveJobButton jobId={job.id} />
-          {alreadyApplied ? (
+          {checksPending ? (
+            <Button variant="secondary" isDisabled>
+              Checking…
+            </Button>
+          ) : alreadyApplied ? (
             <div className="flex flex-col gap-1">
               <Button variant="secondary" isDisabled>
                 Applied
