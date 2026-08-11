@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -45,11 +45,14 @@ function LoginForm() {
     formState: { errors },
   } = useForm<LoginValues>({ resolver: zodResolver(loginSchema) });
 
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.replace(redirectFor(user, next));
+    }
+  }, [authLoading, user, next, router]);
+
   if (authLoading) return null;
-  if (user) {
-    router.replace(redirectFor(user, next));
-    return null;
-  }
+  if (user) return null;
 
   async function onSubmit(values: LoginValues) {
     setFormError(null);

@@ -17,7 +17,8 @@ export default function JobDetailPage() {
   const params = useParams<{ id: string }>();
   const { user, isLoading: authLoading } = useAuth();
   const { data: job, isLoading, isError, refetch } = useJob(params.id);
-  const { data: myApps, isLoading: appsLoading } = useMyApplications(1, 100);
+  const isJobSeeker = user?.role === "JOB_SEEKER";
+  const { data: myApps, isLoading: appsLoading } = useMyApplications(1, 100, isJobSeeker);
 
   const application = myApps?.data.find((a) => a.jobId === params.id);
 

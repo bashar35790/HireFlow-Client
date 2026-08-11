@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -68,11 +68,20 @@ export default function RegisterPage() {
 
   const role = watch("role");
 
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.replace(
+        user.role === "ADMIN"
+          ? "/admin"
+          : user.role === "EMPLOYER"
+            ? "/employer"
+            : "/dashboard"
+      );
+    }
+  }, [authLoading, user, router]);
+
   if (authLoading) return null;
-  if (user) {
-    router.replace(user.role === "ADMIN" ? "/admin" : user.role === "EMPLOYER" ? "/employer" : "/dashboard");
-    return null;
-  }
+  if (user) return null;
 
   async function onSubmit(values: RegisterValues) {
     setFormError(null);

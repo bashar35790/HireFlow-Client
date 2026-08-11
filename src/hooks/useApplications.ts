@@ -15,11 +15,12 @@ export const applicationKeys = {
   detail: (id: string) => [...applicationKeys.all, "detail", id] as const,
 };
 
-export function useMyApplications(page = 1, limit = 10) {
+export function useMyApplications(page = 1, limit = 10, enabled = true) {
   return useQuery({
     queryKey: applicationKeys.my(page, limit),
     queryFn: () => applicationService.getMy(page, limit),
     placeholderData: (previous) => previous,
+    enabled,
   });
 }
 
