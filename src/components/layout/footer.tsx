@@ -2,28 +2,31 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <footer className="border-t border-foreground/10 bg-background dark:border-foreground/5">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
-          <p className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+          <p className="text-xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
+            <span className="flex size-6 items-center justify-center rounded-md bg-primary text-xs font-bold text-white shadow-sm">
+              H
+            </span>
             HireFlow
           </p>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-            Find your next role or hire top talent.
+          <p className="mt-2 text-sm text-foreground/60 font-light">
+            Curated opportunities for premium talent.
           </p>
         </div>
-        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-zinc-600 dark:text-zinc-300">
-          <Link href="/jobs" className="hover:text-zinc-900 dark:hover:text-zinc-50">
-            Browse Jobs
+        <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-foreground/70">
+          <Link href="/jobs" className="transition-colors hover:text-primary">
+            Collection
           </Link>
-          <Link href="/companies" className="hover:text-zinc-900 dark:hover:text-zinc-50">
-            Companies
+          <Link href="/companies" className="transition-colors hover:text-primary">
+            Partners
           </Link>
-          <Link href="/register" className="hover:text-zinc-900 dark:hover:text-zinc-50">
-            Post a Job
+          <Link href="/register" className="transition-colors hover:text-primary">
+            Membership
           </Link>
         </nav>
-        <p className="text-xs text-zinc-400 dark:text-zinc-500">
+        <p className="text-xs text-foreground/40 font-light">
           © {new Date().getFullYear()} HireFlow. All rights reserved.
         </p>
       </div>

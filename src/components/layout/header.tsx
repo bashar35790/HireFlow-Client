@@ -30,10 +30,10 @@ function NavLink({ href, label, exact }: { href: string; label: string; exact?: 
   return (
     <Link
       href={href}
-      className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
+      className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
         active
-          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50"
-          : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+          ? "bg-primary/10 text-primary shadow-sm"
+          : "text-foreground/70 hover:bg-foreground/5 hover:text-foreground"
       }`}
     >
       {label}
@@ -53,48 +53,50 @@ export function Header() {
   const links = [...publicLinks, ...(user ? roleLinks[user.role] ?? [] : [])];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex size-8 items-center justify-center rounded-lg bg-zinc-900 text-sm font-bold text-white dark:bg-zinc-50 dark:text-zinc-900">
+    <header className="sticky top-0 z-40 border-b border-foreground/5 bg-background/80 backdrop-blur-xl shadow-sm">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center gap-3 transition-transform hover:scale-105">
+          <span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-[#f04c24] text-lg font-bold text-white shadow-md shadow-primary/20">
             H
           </span>
-          <span className="text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+          <span className="text-xl font-extrabold tracking-tight text-foreground">
             HireFlow
           </span>
         </Link>
 
-        <nav className="hidden flex-1 items-center gap-1 px-4 md:flex">
-          {links.map((link) => (
-            <NavLink key={link.href} href={link.href} label={link.label} exact={link.href === "/"} />
-          ))}
+        <nav className="hidden flex-1 justify-center items-center gap-2 md:flex">
+          <div className="flex items-center rounded-full border border-foreground/10 bg-white/50 p-1 shadow-sm dark:bg-foreground/5 backdrop-blur-md">
+            {links.map((link) => (
+              <NavLink key={link.href} href={link.href} label={link.label} exact={link.href === "/"} />
+            ))}
+          </div>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {isLoading ? null : isAuthenticated && user ? (
             <>
               <div className="hidden text-right sm:block">
-                <p className="text-sm font-medium leading-tight text-zinc-900 dark:text-zinc-50">
+                <p className="text-sm font-semibold leading-tight text-foreground">
                   {user.name}
                 </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs font-medium text-primary">
                   {user.role.replace("_", " ").toLowerCase()}
                 </p>
               </div>
-              <Button variant="outline" size="sm" isDisabled={isPendingLogout} onPress={handleLogout}>
+              <Button variant="bordered" size="md" className="rounded-full border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-all" isDisabled={isPendingLogout} onPress={handleLogout}>
                 Logout
               </Button>
             </>
           ) : (
             <>
               <Link href="/login">
-                <Button variant="ghost" size="sm">
-                  Login
+                <Button variant="light" size="md" className="rounded-full font-medium text-foreground hover:bg-foreground/5">
+                  Sign In
                 </Button>
               </Link>
               <Link href="/register">
-                <Button variant="primary" size="sm">
-                  Register
+                <Button variant="solid" size="md" className="rounded-full bg-primary text-white shadow-md shadow-primary/30 transition-all hover:bg-primary-hover hover:-translate-y-0.5">
+                  Join Now
                 </Button>
               </Link>
             </>
@@ -102,7 +104,7 @@ export function Header() {
         </div>
       </div>
 
-      <nav className="flex items-center gap-1 overflow-x-auto border-t border-zinc-200 px-4 py-2 md:hidden dark:border-zinc-800">
+      <nav className="flex items-center gap-1 overflow-x-auto border-t border-foreground/5 px-4 py-3 md:hidden">
         {links.map((link) => (
           <NavLink key={link.href} href={link.href} label={link.label} exact={link.href === "/"} />
         ))}
