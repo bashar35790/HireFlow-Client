@@ -6,7 +6,13 @@ import {
   jobStatusChipColor,
 } from "@/lib/constants";
 
-export function JobStatusChip({ status, children }: { status: JobStatus; children?: React.ReactNode }) {
+export function JobStatusChip({
+  status,
+  children,
+}: {
+  status: JobStatus;
+  children?: React.ReactNode;
+}) {
   return (
     <Chip size="sm" variant="soft" color={jobStatusChipColor[status]}>
       {children ?? status}
@@ -14,7 +20,11 @@ export function JobStatusChip({ status, children }: { status: JobStatus; childre
   );
 }
 
-export function ApplicationStatusChip({ status }: { status: ApplicationStatus }) {
+export function ApplicationStatusChip({
+  status,
+}: {
+  status: ApplicationStatus;
+}) {
   return (
     <Chip size="sm" variant="soft" color={applicationStatusChipColor[status]}>
       {APPLICATION_STATUS_LABEL[status]}

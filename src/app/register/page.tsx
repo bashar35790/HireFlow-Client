@@ -39,12 +39,12 @@ function RoleCard({
       onClick={() => onSelect(value)}
       className={`rounded-xl border-2 p-4 text-left transition ${
         selected
-          ? "border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800"
-          : "border-zinc-200 hover:border-zinc-400 dark:border-zinc-700 dark:hover:border-zinc-500"
+          ? "border-foreground bg-foreground/10"
+          : "border-foreground/20 hover:border-foreground/50 dark:hover:border-foreground/60"
       }`}
     >
-      <p className="font-semibold text-zinc-900 dark:text-zinc-50">{title}</p>
-      <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
+      <p className="font-semibold text-foreground">{title}</p>
+      <p className="mt-1 text-sm text-foreground/60">{description}</p>
     </button>
   );
 }
@@ -75,7 +75,7 @@ export default function RegisterPage() {
           ? "/admin"
           : user.role === "EMPLOYER"
             ? "/employer"
-            : "/dashboard"
+            : "/dashboard",
       );
     }
   }, [authLoading, user, router]);
@@ -97,7 +97,9 @@ export default function RegisterPage() {
     <AuthShell>
       <Card.Header className="flex-col items-start gap-1">
         <Card.Title className="text-2xl">Create your account</Card.Title>
-        <Card.Description>Join HireFlow as a job seeker or employer</Card.Description>
+        <Card.Description>
+          Join HireFlow as a job seeker or employer
+        </Card.Description>
       </Card.Header>
       <Card.Content>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -129,7 +131,9 @@ export default function RegisterPage() {
               aria-label="Full name"
               className="w-full"
             />
-            {errors.name && <p className="text-xs text-red-600">{errors.name.message}</p>}
+            {errors.name && (
+              <p className="text-xs text-red-600">{errors.name.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Input
@@ -139,7 +143,9 @@ export default function RegisterPage() {
               aria-label="Email"
               className="w-full"
             />
-            {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-xs text-red-600">{errors.email.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Input
@@ -149,17 +155,25 @@ export default function RegisterPage() {
               aria-label="Password"
               className="w-full"
             />
-            {errors.password && <p className="text-xs text-red-600">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-xs text-red-600">{errors.password.message}</p>
+            )}
           </div>
-          <Button type="submit" variant="primary" size="lg" fullWidth isDisabled={register.isPending}>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
+            isDisabled={register.isPending}
+          >
             {register.isPending ? "Creating account…" : "Create account"}
           </Button>
         </form>
       </Card.Content>
       <Card.Footer className="justify-center">
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Already have an account?{" "}
-          <Link href="/login" className="font-medium text-zinc-900 underline dark:text-zinc-100">
+        <p className="text-sm text-foreground/60">
+          Already have an account?{""}
+          <Link href="/login" className="font-medium text-foreground underline">
             Login
           </Link>
         </p>

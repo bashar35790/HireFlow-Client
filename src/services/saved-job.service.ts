@@ -8,7 +8,9 @@ interface SavedJobListResponse {
 
 export const savedJobService = {
   async save(jobId: string): Promise<SavedJob> {
-    const { data } = await api.post<ApiResponse<SavedJob>>("/saved-jobs", { jobId });
+    const { data } = await api.post<ApiResponse<SavedJob>>("/saved-jobs", {
+      jobId,
+    });
     return data.data;
   },
 

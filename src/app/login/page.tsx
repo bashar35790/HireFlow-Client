@@ -20,7 +20,11 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 function redirectFor(user: { role: string }, next?: string | null) {
   if (next && next.startsWith("/") && !next.startsWith("//")) return next;
-  return user.role === "ADMIN" ? "/admin" : user.role === "EMPLOYER" ? "/employer" : "/dashboard";
+  return user.role === "ADMIN"
+    ? "/admin"
+    : user.role === "EMPLOYER"
+      ? "/employer"
+      : "/dashboard";
 }
 
 export default function LoginPage() {
@@ -85,7 +89,9 @@ function LoginForm() {
               aria-label="Email"
               className="w-full"
             />
-            {errors.email && <p className="text-xs text-red-600">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-xs text-red-600">{errors.email.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Input
@@ -95,17 +101,28 @@ function LoginForm() {
               aria-label="Password"
               className="w-full"
             />
-            {errors.password && <p className="text-xs text-red-600">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-xs text-red-600">{errors.password.message}</p>
+            )}
           </div>
-          <Button type="submit" variant="primary" size="lg" fullWidth isDisabled={login.isPending}>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
+            isDisabled={login.isPending}
+          >
             {login.isPending ? "Signing in…" : "Sign in"}
           </Button>
         </form>
       </Card.Content>
       <Card.Footer className="justify-center">
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-zinc-900 underline dark:text-zinc-100">
+        <p className="text-sm text-foreground/60">
+          Don&apos;t have an account?{""}
+          <Link
+            href="/register"
+            className="font-medium text-foreground underline"
+          >
             Register
           </Link>
         </p>

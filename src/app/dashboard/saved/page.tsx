@@ -24,11 +24,16 @@ function SavedJobs() {
 
   return (
     <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
-      <h1 className="mb-1 text-3xl font-bold text-zinc-900 dark:text-zinc-50">Saved Jobs</h1>
-      <p className="mb-8 text-zinc-500 dark:text-zinc-400">Jobs you&apos;ve bookmarked to apply later</p>
+      <h1 className="mb-1 text-3xl font-bold text-foreground">Saved Jobs</h1>
+      <p className="mb-8 text-foreground/60">
+        Jobs you&apos;ve bookmarked to apply later
+      </p>
 
       {isError ? (
-        <ErrorState message="Could not load saved jobs." onRetry={() => refetch()} />
+        <ErrorState
+          message="Could not load saved jobs."
+          onRetry={() => refetch()}
+        />
       ) : data && data.data.length > 0 ? (
         <>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -45,7 +50,7 @@ function SavedJobs() {
                     Remove from saved
                   </Button>
                 </div>
-              ) : null
+              ) : null,
             )}
           </div>
         </>

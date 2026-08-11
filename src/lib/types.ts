@@ -25,11 +25,7 @@ export type CategoryStatus = "ACTIVE" | "INACTIVE";
 export type JobStatus = "DRAFT" | "PUBLISHED" | "CLOSED";
 export type ReviewStatus = "ACTIVE" | "HIDDEN";
 export type ApplicationStatus =
-  | "PENDING"
-  | "REVIEWING"
-  | "SHORTLISTED"
-  | "REJECTED"
-  | "ACCEPTED";
+  "PENDING" | "REVIEWING" | "SHORTLISTED" | "REJECTED" | "ACCEPTED";
 
 export interface User {
   id: string;

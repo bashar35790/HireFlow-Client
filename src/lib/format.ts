@@ -21,7 +21,11 @@ export function formatDateTime(value?: string | null): string {
 export function formatSalary(min?: number | null, max?: number | null): string {
   if (min == null && max == null) return "Not disclosed";
   const fmt = (n: number) =>
-    n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+    n.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
   if (min != null && max != null) return `${fmt(min)} – ${fmt(max)}`;
   if (min != null) return `${fmt(min)}+`;
   return `Up to ${fmt(max!)}`;

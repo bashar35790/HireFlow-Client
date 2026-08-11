@@ -6,7 +6,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
+export function Pagination({
+  page,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -16,7 +20,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
-        className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm text-zinc-600 transition hover:bg-zinc-100 disabled:pointer-events-none disabled:opacity-40 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        className="rounded-lg border border-foreground/30 px-3 py-1.5 text-sm text-foreground/70 transition hover:bg-foreground/10 disabled:pointer-events-none disabled:opacity-40 dark:hover:bg-foreground/90"
       >
         Prev
       </button>
@@ -26,8 +30,8 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
           onClick={() => onPageChange(p)}
           className={`size-9 rounded-lg text-sm font-medium transition ${
             p === page
-              ? "bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900"
-              : "border border-zinc-300 text-zinc-600 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              ? "bg-foreground text-white"
+              : "border border-foreground/30 text-foreground/70 hover:bg-foreground/10 dark:hover:bg-foreground/90"
           }`}
         >
           {p}
@@ -36,7 +40,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
-        className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm text-zinc-600 transition hover:bg-zinc-100 disabled:pointer-events-none disabled:opacity-40 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+        className="rounded-lg border border-foreground/30 px-3 py-1.5 text-sm text-foreground/70 transition hover:bg-foreground/10 disabled:pointer-events-none disabled:opacity-40 dark:hover:bg-foreground/90"
       >
         Next
       </button>

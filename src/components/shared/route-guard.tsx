@@ -12,7 +12,11 @@ interface RouteGuardProps {
   redirectTo?: string;
 }
 
-export function RouteGuard({ children, roles, redirectTo = "/login" }: RouteGuardProps) {
+export function RouteGuard({
+  children,
+  roles,
+  redirectTo = "/login",
+}: RouteGuardProps) {
   const router = useRouter();
   const { data: user, isLoading } = useCurrentUser();
 

@@ -20,11 +20,12 @@ function EditJob() {
   const { data: job, isLoading, isError, refetch } = useJob(params.id);
 
   if (isLoading) return <Loading />;
-  if (isError || !job) return <ErrorState message="Job not found." onRetry={() => refetch()} />;
+  if (isError || !job)
+    return <ErrorState message="Job not found." onRetry={() => refetch()} />;
 
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+      <h1 className="mb-6 text-2xl font-bold text-foreground">
         Edit: {job.title}
       </h1>
       <JobForm companyId={job.companyId} initialJob={job} />

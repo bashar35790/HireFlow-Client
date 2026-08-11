@@ -7,7 +7,9 @@ export interface CreateReviewPayload {
   comment?: string;
 }
 
-export type UpdateReviewPayload = Partial<Omit<CreateReviewPayload, "companyId">>;
+export type UpdateReviewPayload = Partial<
+  Omit<CreateReviewPayload, "companyId">
+>;
 
 interface ReviewListResponse {
   data: Review[];
@@ -15,7 +17,11 @@ interface ReviewListResponse {
 }
 
 export const reviewService = {
-  async list(companyId?: string, page = 1, limit = 10): Promise<ReviewListResponse> {
+  async list(
+    companyId?: string,
+    page = 1,
+    limit = 10,
+  ): Promise<ReviewListResponse> {
     const { data } = await api.get<ApiResponse<Review[]>>("/reviews", {
       params: {
         ...(companyId ? { companyId } : {}),
@@ -37,7 +43,10 @@ export const reviewService = {
   },
 
   async update(id: string, payload: UpdateReviewPayload): Promise<Review> {
-    const { data } = await api.patch<ApiResponse<Review>>(`/reviews/${id}`, payload);
+    const { data } = await api.patch<ApiResponse<Review>>(
+      `/reviews/${id}`,
+      payload,
+    );
     return data.data;
   },
 

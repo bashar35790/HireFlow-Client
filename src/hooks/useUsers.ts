@@ -5,7 +5,8 @@ import { userService, type UpdateUserPayload } from "@/services/user.service";
 
 export const userKeys = {
   all: ["users"] as const,
-  list: (page: number, limit: number) => [...userKeys.all, page, limit] as const,
+  list: (page: number, limit: number) =>
+    [...userKeys.all, page, limit] as const,
 };
 
 export function useUsers(page = 1, limit = 10) {

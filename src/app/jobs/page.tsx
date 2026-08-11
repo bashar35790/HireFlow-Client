@@ -28,8 +28,12 @@ function JobsContent() {
   const [category, setCategory] = useState(searchParams.get("category") ?? "");
   const [location, setLocation] = useState(searchParams.get("location") ?? "");
   const [jobType, setJobType] = useState(searchParams.get("jobType") ?? "");
-  const [salaryMin, setSalaryMin] = useState(searchParams.get("salaryMin") ?? "");
-  const [salaryMax, setSalaryMax] = useState(searchParams.get("salaryMax") ?? "");
+  const [salaryMin, setSalaryMin] = useState(
+    searchParams.get("salaryMin") ?? "",
+  );
+  const [salaryMax, setSalaryMax] = useState(
+    searchParams.get("salaryMax") ?? "",
+  );
   const page = Number(searchParams.get("page")) || 1;
 
   const { data: categories } = useCategories();
@@ -50,7 +54,7 @@ function JobsContent() {
       if (nextPage > 1) params.set("page", String(nextPage));
       return params.toString();
     },
-    [search, category, location, jobType, salaryMin, salaryMax]
+    [search, category, location, jobType, salaryMin, salaryMax],
   );
 
   const pushParams = useCallback(
@@ -58,7 +62,7 @@ function JobsContent() {
       const qs = buildParams(nextPage, overrides);
       router.replace(`/jobs${qs ? `?${qs}` : ""}`);
     },
-    [buildParams, router]
+    [buildParams, router],
   );
 
   useEffect(() => {
@@ -84,23 +88,32 @@ function JobsContent() {
       category: searchParams.get("category") || undefined,
       location: searchParams.get("location") || undefined,
       jobType: searchParams.get("jobType") || undefined,
-      salaryMin: searchParams.get("salaryMin") ? Number(searchParams.get("salaryMin")) : undefined,
-      salaryMax: searchParams.get("salaryMax") ? Number(searchParams.get("salaryMax")) : undefined,
+      salaryMin: searchParams.get("salaryMin")
+        ? Number(searchParams.get("salaryMin"))
+        : undefined,
+      salaryMax: searchParams.get("salaryMax")
+        ? Number(searchParams.get("salaryMax"))
+        : undefined,
       page,
       limit: 10,
     }),
-    [searchParams, page]
+    [searchParams, page],
   );
 
   const { data, isLoading, isError, refetch } = useJobs(filters);
   const hasActiveFilters =
-    Boolean(search) || Boolean(category) || Boolean(location) || Boolean(jobType) || Boolean(salaryMin) || Boolean(salaryMax);
+    Boolean(search) ||
+    Boolean(category) ||
+    Boolean(location) ||
+    Boolean(jobType) ||
+    Boolean(salaryMin) ||
+    Boolean(salaryMax);
 
   return (
     <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">Browse Jobs</h1>
-        <p className="mt-1 text-zinc-500 dark:text-zinc-400">
+        <h1 className="text-3xl font-bold text-foreground">Browse Jobs</h1>
+        <p className="mt-1 text-foreground/60">
           Search and filter jobs to find your next opportunity
         </p>
       </div>
@@ -164,7 +177,11 @@ function JobsContent() {
               <Select.Popover>
                 <ListBox>
                   {JOB_TYPES.map((t) => (
-                    <ListBox.Item key={t.value} id={t.value} textValue={t.label}>
+                    <ListBox.Item
+                      key={t.value}
+                      id={t.value}
+                      textValue={t.label}
+                    >
                       {t.label}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
@@ -174,7 +191,7 @@ function JobsContent() {
             </Select>
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+            <Label className="text-xs font-medium text-foreground/60">
               Salary range (USD)
             </Label>
             <div className="grid grid-cols-2 gap-2">
@@ -205,10 +222,13 @@ function JobsContent() {
           {isLoading ? (
             <Loading />
           ) : isError ? (
-            <ErrorState message="Could not load jobs." onRetry={() => refetch()} />
+            <ErrorState
+              message="Could not load jobs."
+              onRetry={() => refetch()}
+            />
           ) : data && data.data.length > 0 ? (
             <>
-              <p className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
+              <p className="mb-4 text-sm text-foreground/60">
                 {data.meta.total} job{data.meta.total === 1 ? "" : "s"} found
               </p>
               <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">

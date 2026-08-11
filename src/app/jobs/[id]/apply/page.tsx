@@ -15,8 +15,16 @@ import { ErrorState } from "@/components/shared/error-state";
 import { getErrorMessage } from "@/lib/error-message";
 
 const applySchema = z.object({
-  coverLetter: z.string().max(5000, "Cover letter is too long").optional().or(z.literal("")),
-  resume: z.string().max(1000, "Resume link is too long").optional().or(z.literal("")),
+  coverLetter: z
+    .string()
+    .max(5000, "Cover letter is too long")
+    .optional()
+    .or(z.literal("")),
+  resume: z
+    .string()
+    .max(1000, "Resume link is too long")
+    .optional()
+    .or(z.literal("")),
 });
 
 type ApplyValues = z.infer<typeof applySchema>;
@@ -65,12 +73,12 @@ function ApplyForm() {
         <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-700 dark:bg-green-950">
           ✓
         </div>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+        <h1 className="text-2xl font-bold text-foreground">
           Application submitted!
         </h1>
-        <p className="mt-2 text-zinc-500 dark:text-zinc-400">
-          Your application for <span className="font-medium">{job.title}</span> has been received.
-          You can track its status from your dashboard.
+        <p className="mt-2 text-foreground/60">
+          Your application for <span className="font-medium">{job.title}</span>{" "}
+          has been received. You can track its status from your dashboard.
         </p>
         <div className="mt-6 flex gap-3">
           <Link href="/dashboard">
@@ -86,8 +94,11 @@ function ApplyForm() {
 
   return (
     <div className="mx-auto w-full max-w-2xl flex-1 px-4 py-10 sm:px-6">
-      <div className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
-        <Link href={`/jobs/${job.id}`} className="hover:text-zinc-900 dark:hover:text-zinc-100">
+      <div className="mb-4 text-sm text-foreground/60">
+        <Link
+          href={`/jobs/${job.id}`}
+          className="hover:text-foreground dark:hover:text-foreground/10"
+        >
           ← Back to job
         </Link>
       </div>
@@ -99,7 +110,10 @@ function ApplyForm() {
           </Card.Description>
         </Card.Header>
         <Card.Content>
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
             {formError && (
               <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-400">
                 {formError}
@@ -112,7 +126,9 @@ function ApplyForm() {
                 aria-label="Resume URL"
                 className="w-full"
               />
-              {errors.resume && <p className="text-xs text-red-600">{errors.resume.message}</p>}
+              {errors.resume && (
+                <p className="text-xs text-red-600">{errors.resume.message}</p>
+              )}
             </div>
             <div className="flex flex-col gap-1.5">
               <TextArea
@@ -123,10 +139,18 @@ function ApplyForm() {
                 className="w-full"
               />
               {errors.coverLetter && (
-                <p className="text-xs text-red-600">{errors.coverLetter.message}</p>
+                <p className="text-xs text-red-600">
+                  {errors.coverLetter.message}
+                </p>
               )}
             </div>
-            <Button type="submit" variant="primary" size="lg" fullWidth isDisabled={apply.isPending}>
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              fullWidth
+              isDisabled={apply.isPending}
+            >
               {apply.isPending ? "Submitting…" : "Submit application"}
             </Button>
           </form>

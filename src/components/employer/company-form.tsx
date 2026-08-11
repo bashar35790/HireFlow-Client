@@ -15,7 +15,10 @@ const companySchema = z.object({
   description: z.string().max(5000).optional().or(z.literal("")),
   logo: z.string().max(500).optional().or(z.literal("")),
   website: z.string().max(500).optional().or(z.literal("")),
-  location: z.string().min(2, "Location must be at least 2 characters").max(200),
+  location: z
+    .string()
+    .min(2, "Location must be at least 2 characters")
+    .max(200),
 });
 
 type CompanyValues = z.infer<typeof companySchema>;
@@ -70,9 +73,12 @@ export function CompanyForm({ initialCompany }: CompanyFormProps) {
   return (
     <Card variant="secondary">
       <Card.Header>
-        <Card.Title>{isEdit ? "Edit company" : "Create your company profile"}</Card.Title>
+        <Card.Title>
+          {isEdit ? "Edit company" : "Create your company profile"}
+        </Card.Title>
         <Card.Description>
-          Your company profile will be shown to job seekers who browse companies.
+          Your company profile will be shown to job seekers who browse
+          companies.
         </Card.Description>
       </Card.Header>
       <Card.Content>
@@ -85,26 +91,50 @@ export function CompanyForm({ initialCompany }: CompanyFormProps) {
 
           <div className="flex flex-col gap-1.5">
             <Label className="text-sm font-medium">Company name</Label>
-            <Input {...register("name")} placeholder="e.g. Acme Inc." className="w-full" />
-            {errors.name && <p className="text-xs text-red-600">{errors.name.message}</p>}
+            <Input
+              {...register("name")}
+              placeholder="e.g. Acme Inc."
+              className="w-full"
+            />
+            {errors.name && (
+              <p className="text-xs text-red-600">{errors.name.message}</p>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">
             <Label className="text-sm font-medium">Location</Label>
-            <Input {...register("location")} placeholder="e.g. Dhaka, Bangladesh" className="w-full" />
-            {errors.location && <p className="text-xs text-red-600">{errors.location.message}</p>}
+            <Input
+              {...register("location")}
+              placeholder="e.g. Dhaka, Bangladesh"
+              className="w-full"
+            />
+            {errors.location && (
+              <p className="text-xs text-red-600">{errors.location.message}</p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label className="text-sm font-medium">Website</Label>
-              <Input {...register("website")} placeholder="https://acme.example" className="w-full" />
-              {errors.website && <p className="text-xs text-red-600">{errors.website.message}</p>}
+              <Input
+                {...register("website")}
+                placeholder="https://acme.example"
+                className="w-full"
+              />
+              {errors.website && (
+                <p className="text-xs text-red-600">{errors.website.message}</p>
+              )}
             </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-sm font-medium">Logo URL</Label>
-              <Input {...register("logo")} placeholder="https://…/logo.png" className="w-full" />
-              {errors.logo && <p className="text-xs text-red-600">{errors.logo.message}</p>}
+              <Input
+                {...register("logo")}
+                placeholder="https://…/logo.png"
+                className="w-full"
+              />
+              {errors.logo && (
+                <p className="text-xs text-red-600">{errors.logo.message}</p>
+              )}
             </div>
           </div>
 
@@ -117,7 +147,9 @@ export function CompanyForm({ initialCompany }: CompanyFormProps) {
               className="w-full"
             />
             {errors.description && (
-              <p className="text-xs text-red-600">{errors.description.message}</p>
+              <p className="text-xs text-red-600">
+                {errors.description.message}
+              </p>
             )}
           </div>
 

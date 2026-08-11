@@ -24,14 +24,31 @@ export default function EmployerJobsPage() {
 
 function JobsManage() {
   const { user } = useAuth();
-  const { data: company, isLoading: companyLoading, isError: companyError, refetch: refetchCompany } = useMyCompany(user?.id);
+  const {
+    data: company,
+    isLoading: companyLoading,
+    isError: companyError,
+    refetch: refetchCompany,
+  } = useMyCompany(user?.id);
   const { data: myJobs, isLoading, isError, refetch } = useMyJobs(company?.id);
   const deleteJob = useDeleteJob();
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   if (companyLoading) return <Loading />;
-  if (companyError) return <ErrorState message="Failed to load your company." onRetry={() => refetchCompany()} />;
-  if (isError) return <ErrorState message="Failed to load your jobs." onRetry={() => refetch()} />;
+  if (companyError)
+    return (
+      <ErrorState
+        message="Failed to load your company."
+        onRetry={() => refetchCompany()}
+      />
+    );
+  if (isError)
+    return (
+      <ErrorState
+        message="Failed to load your jobs."
+        onRetry={() => refetch()}
+      />
+    );
 
   if (!company) {
     return (
@@ -58,8 +75,8 @@ function JobsManage() {
     <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
       <div className="mb-8 flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">My Jobs</h1>
-          <p className="mt-1 text-zinc-500 dark:text-zinc-400">
+          <h1 className="text-3xl font-bold text-foreground">My Jobs</h1>
+          <p className="mt-1 text-foreground/60">
             Create, update and manage your job postings
           </p>
         </div>
@@ -76,24 +93,27 @@ function JobsManage() {
             <Card key={job.id} variant="secondary">
               <Card.Header className="gap-4">
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate font-semibold text-zinc-900 dark:text-zinc-50">
+                  <h2 className="truncate font-semibold text-foreground">
                     {job.title}
                   </h2>
-                  <p className="truncate text-sm text-zinc-500 dark:text-zinc-400">
-                    {JOB_TYPES_MAP[job.jobType]} · {job.location} ·{" "}
-                    {formatSalary(job.salaryMin, job.salaryMax)} · {formatDate(job.createdAt)}
+                  <p className="truncate text-sm text-foreground/60">
+                    {JOB_TYPES_MAP[job.jobType]} · {job.location} ·{""}
+                    {formatSalary(job.salaryMin, job.salaryMax)} ·{" "}
+                    {formatDate(job.createdAt)}
                   </p>
                 </div>
-                <JobStatusChip status={job.status}>{JOB_STATUS_LABEL[job.status]}</JobStatusChip>
+                <JobStatusChip status={job.status}>
+                  {JOB_STATUS_LABEL[job.status]}
+                </JobStatusChip>
               </Card.Header>
               <Card.Footer className="gap-2">
                 <Link href={`/employer/jobs/${job.id}`}>
-                  <button className="rounded-lg bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">
+                  <button className="rounded-lg bg-foreground px-3 py-1.5 text-sm font-medium text-white transition hover:bg-foreground/80 dark:hover:bg-foreground/30">
                     View & applicants
                   </button>
                 </Link>
                 <Link href={`/employer/jobs/${job.id}/edit`}>
-                  <button className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                  <button className="rounded-lg border border-foreground/30 px-3 py-1.5 text-sm text-foreground/80 transition hover:bg-foreground/10 dark:hover:bg-foreground/90">
                     Edit
                   </button>
                 </Link>

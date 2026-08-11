@@ -1,7 +1,8 @@
 import { api } from "@/lib/axios";
 import type { ApiResponse, Job, JobStatus, PaginationMeta } from "@/lib/types";
 
-export type JobType = "FULL_TIME" | "PART_TIME" | "CONTRACT" | "INTERNSHIP" | "REMOTE";
+export type JobType =
+  "FULL_TIME" | "PART_TIME" | "CONTRACT" | "INTERNSHIP" | "REMOTE";
 export type ExperienceLevel = "ENTRY" | "JUNIOR" | "MID" | "SENIOR" | "LEAD";
 
 export interface JobFilters {
@@ -37,15 +38,14 @@ interface JobListResponse {
 
 export const jobService = {
   async list(filters: JobFilters = {}): Promise<JobListResponse> {
-    const params = Object.entries(filters).reduce<Record<string, string | number>>(
-      (acc, [key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
-          acc[key] = value;
-        }
-        return acc;
-      },
-      {}
-    );
+    const params = Object.entries(filters).reduce<
+      Record<string, string | number>
+    >((acc, [key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
     const { data } = await api.get<ApiResponse<Job[]>>("/jobs", { params });
     return { data: data.data, meta: data.meta! };
   },

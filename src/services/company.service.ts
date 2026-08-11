@@ -1,5 +1,10 @@
 import { api } from "@/lib/axios";
-import type { ApiResponse, Company, CompanyStatus, PaginationMeta } from "@/lib/types";
+import type {
+  ApiResponse,
+  Company,
+  CompanyStatus,
+  PaginationMeta,
+} from "@/lib/types";
 
 export interface CompanyFilters {
   status?: CompanyStatus;
@@ -26,16 +31,17 @@ interface CompanyListResponse {
 
 export const companyService = {
   async list(filters: CompanyFilters = {}): Promise<CompanyListResponse> {
-    const params = Object.entries(filters).reduce<Record<string, string | number>>(
-      (acc, [key, value]) => {
-        if (value !== undefined && value !== null && value !== "") {
-          acc[key] = value;
-        }
-        return acc;
-      },
-      {}
-    );
-    const { data } = await api.get<ApiResponse<Company[]>>("/companies", { params });
+    const params = Object.entries(filters).reduce<
+      Record<string, string | number>
+    >((acc, [key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+    const { data } = await api.get<ApiResponse<Company[]>>("/companies", {
+      params,
+    });
     return { data: data.data, meta: data.meta! };
   },
 
@@ -45,12 +51,18 @@ export const companyService = {
   },
 
   async create(payload: CreateCompanyPayload): Promise<Company> {
-    const { data } = await api.post<ApiResponse<Company>>("/companies", payload);
+    const { data } = await api.post<ApiResponse<Company>>(
+      "/companies",
+      payload,
+    );
     return data.data;
   },
 
   async update(id: string, payload: UpdateCompanyPayload): Promise<Company> {
-    const { data } = await api.patch<ApiResponse<Company>>(`/companies/${id}`, payload);
+    const { data } = await api.patch<ApiResponse<Company>>(
+      `/companies/${id}`,
+      payload,
+    );
     return data.data;
   },
 

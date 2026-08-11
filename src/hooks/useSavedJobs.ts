@@ -7,7 +7,8 @@ import { jobKeys } from "./useJobs";
 
 export const savedJobKeys = {
   all: ["saved-jobs"] as const,
-  my: (page: number, limit: number) => [...savedJobKeys.all, "my", page, limit] as const,
+  my: (page: number, limit: number) =>
+    [...savedJobKeys.all, "my", page, limit] as const,
 };
 
 export function useSavedJobs(page = 1, limit = 10) {

@@ -22,14 +22,22 @@ function CompanyManage() {
   const { data: company, isLoading, isError, refetch } = useMyCompany(user?.id);
 
   if (isLoading) return <Loading />;
-  if (isError) return <ErrorState message="Failed to load your company." onRetry={() => refetch()} />;
+  if (isError)
+    return (
+      <ErrorState
+        message="Failed to load your company."
+        onRetry={() => refetch()}
+      />
+    );
 
   return (
     <div className="mx-auto w-full max-w-2xl flex-1 px-4 py-10 sm:px-6">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">Company Profile</h1>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          <h1 className="text-2xl font-bold text-foreground">
+            Company Profile
+          </h1>
+          <p className="mt-1 text-sm text-foreground/60">
             {company ? "Update your company details" : "Set up your company"}
           </p>
         </div>

@@ -19,10 +19,16 @@ export function Footer() {
           <Link href="/jobs" className="transition-colors hover:text-primary">
             Collection
           </Link>
-          <Link href="/companies" className="transition-colors hover:text-primary">
+          <Link
+            href="/companies"
+            className="transition-colors hover:text-primary"
+          >
             Partners
           </Link>
-          <Link href="/register" className="transition-colors hover:text-primary">
+          <Link
+            href="/register"
+            className="transition-colors hover:text-primary"
+          >
             Membership
           </Link>
         </nav>

@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { Card } from "@heroui/react";
-import { useMyApplications, useDeleteApplication } from "@/hooks/useApplications";
+import {
+  useMyApplications,
+  useDeleteApplication,
+} from "@/hooks/useApplications";
 import { RouteGuard } from "@/components/shared/route-guard";
 import { Loading } from "@/components/shared/loading";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -36,39 +39,48 @@ function MyApplications() {
 
   return (
     <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-10 sm:px-6">
-      <h1 className="mb-1 text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+      <h1 className="mb-1 text-3xl font-bold text-foreground">
         My Applications
       </h1>
-      <p className="mb-8 text-zinc-500 dark:text-zinc-400">
+      <p className="mb-8 text-foreground/60">
         Track the status of your job applications
       </p>
 
       {isLoading ? (
         <Loading />
       ) : isError ? (
-        <ErrorState message="Could not load your applications." onRetry={() => refetch()} />
+        <ErrorState
+          message="Could not load your applications."
+          onRetry={() => refetch()}
+        />
       ) : data && data.data.length > 0 ? (
         <div className="flex flex-col gap-4">
           {data.data.map((application) => (
             <Card key={application.id} variant="secondary">
               <Card.Header className="gap-4">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-zinc-100 text-sm font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-foreground/10 text-sm font-bold text-foreground/70">
                   {application.job?.company?.name?.[0] ?? "J"}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate font-semibold text-zinc-900 dark:text-zinc-50">
+                  <h2 className="truncate font-semibold text-foreground">
                     {application.job?.title ?? "Job"}
                   </h2>
-                  <p className="truncate text-sm text-zinc-500 dark:text-zinc-400">
-                    {application.job?.company?.name} · {application.job?.location}
+                  <p className="truncate text-sm text-foreground/60">
+                    {application.job?.company?.name} ·{" "}
+                    {application.job?.location}
                   </p>
                 </div>
                 <ApplicationStatusChip status={application.status} />
               </Card.Header>
               <Card.Content className="gap-2">
-                <div className="text-sm text-zinc-600 dark:text-zinc-300">
+                <div className="text-sm text-foreground/70">
                   {application.job?.salaryMin != null && (
-                    <span className="mr-3">{formatSalary(application.job.salaryMin, application.job.salaryMax)}</span>
+                    <span className="mr-3">
+                      {formatSalary(
+                        application.job.salaryMin,
+                        application.job.salaryMax,
+                      )}
+                    </span>
                   )}
                   <span>Applied {formatDate(application.createdAt)}</span>
                 </div>
@@ -76,7 +88,7 @@ function MyApplications() {
               <Card.Footer className="gap-2">
                 {application.job && (
                   <Link href={`/jobs/${application.job.id}`}>
-                    <button className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                    <button className="rounded-lg border border-foreground/30 px-3 py-1.5 text-sm text-foreground/80 transition hover:bg-foreground/10 dark:hover:bg-foreground/90">
                       View job
                     </button>
                   </Link>

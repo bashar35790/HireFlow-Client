@@ -1,7 +1,11 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { authService, type LoginPayload, type RegisterPayload } from "@/services/auth.service";
+import {
+  authService,
+  type LoginPayload,
+  type RegisterPayload,
+} from "@/services/auth.service";
 import type { User } from "@/lib/types";
 
 export const authKeys = {

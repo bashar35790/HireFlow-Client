@@ -17,11 +17,11 @@ export const EXPERIENCE_LEVELS = [
 ] as const;
 
 export const JOB_TYPES_MAP: Record<string, string> = Object.fromEntries(
-  JOB_TYPES.map((t) => [t.value, t.label])
+  JOB_TYPES.map((t) => [t.value, t.label]),
 );
 
 export const EXPERIENCE_LEVELS_MAP: Record<string, string> = Object.fromEntries(
-  EXPERIENCE_LEVELS.map((t) => [t.value, t.label])
+  EXPERIENCE_LEVELS.map((t) => [t.value, t.label]),
 );
 
 export const JOB_STATUSES: { value: JobStatus; label: string }[] = [
@@ -58,7 +58,10 @@ const red = "danger" as const;
 const blue = "accent" as const;
 const neutral = "default" as const;
 
-export const jobStatusChipColor: Record<JobStatus, "success" | "warning" | "danger" | "accent" | "default"> = {
+export const jobStatusChipColor: Record<
+  JobStatus,
+  "success" | "warning" | "danger" | "accent" | "default"
+> = {
   DRAFT: neutral,
   PUBLISHED: green,
   CLOSED: red,

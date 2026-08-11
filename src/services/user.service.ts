@@ -1,5 +1,11 @@
 import { api } from "@/lib/axios";
-import type { ApiResponse, PaginationMeta, User, UserRole, UserStatus } from "@/lib/types";
+import type {
+  ApiResponse,
+  PaginationMeta,
+  User,
+  UserRole,
+  UserStatus,
+} from "@/lib/types";
 
 export interface UpdateUserPayload {
   name?: string;
@@ -26,7 +32,10 @@ export const userService = {
   },
 
   async update(id: string, payload: UpdateUserPayload): Promise<User> {
-    const { data } = await api.patch<ApiResponse<User>>(`/users/${id}`, payload);
+    const { data } = await api.patch<ApiResponse<User>>(
+      `/users/${id}`,
+      payload,
+    );
     return data.data;
   },
 

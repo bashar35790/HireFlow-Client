@@ -24,12 +24,14 @@ export function useMyApplications(page = 1, limit = 10, enabled = true) {
   });
 }
 
-export function useAllApplications(filters: {
-  jobId?: string;
-  status?: ApplicationStatus;
-  page?: number;
-  limit?: number;
-} = {}) {
+export function useAllApplications(
+  filters: {
+    jobId?: string;
+    status?: ApplicationStatus;
+    page?: number;
+    limit?: number;
+  } = {},
+) {
   return useQuery({
     queryKey: [...applicationKeys.all, "all", filters],
     queryFn: () => applicationService.listAll(filters),
@@ -47,10 +49,13 @@ export function useApplication(id?: string) {
 export function useApplyToJob() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateApplicationPayload) => applicationService.apply(payload),
+    mutationFn: (payload: CreateApplicationPayload) =>
+      applicationService.apply(payload),
     onSuccess: (application) => {
       queryClient.invalidateQueries({ queryKey: applicationKeys.all });
-      queryClient.invalidateQueries({ queryKey: jobKeys.detail(application.jobId) });
+      queryClient.invalidateQueries({
+        queryKey: jobKeys.detail(application.jobId),
+      });
       queryClient.invalidateQueries({ queryKey: jobKeys.lists() });
     },
   });

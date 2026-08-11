@@ -46,17 +46,25 @@ export function useMyCompany(ownerId?: string) {
 export function useCreateCompany() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (payload: CreateCompanyPayload) => companyService.create(payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: companyKeys.all }),
+    mutationFn: (payload: CreateCompanyPayload) =>
+      companyService.create(payload),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: companyKeys.all }),
   });
 }
 
 export function useUpdateCompany() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: UpdateCompanyPayload }) =>
-      companyService.update(id, payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: companyKeys.all }),
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: string;
+      payload: UpdateCompanyPayload;
+    }) => companyService.update(id, payload),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: companyKeys.all }),
   });
 }
 
@@ -64,6 +72,7 @@ export function useDeleteCompany() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => companyService.remove(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: companyKeys.all }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: companyKeys.all }),
   });
 }

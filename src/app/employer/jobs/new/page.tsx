@@ -21,7 +21,13 @@ function NewJob() {
   const { data: company, isLoading, isError, refetch } = useMyCompany(user?.id);
 
   if (isLoading) return <Loading />;
-  if (isError) return <ErrorState message="Failed to load your company." onRetry={() => refetch()} />;
+  if (isError)
+    return (
+      <ErrorState
+        message="Failed to load your company."
+        onRetry={() => refetch()}
+      />
+    );
 
   if (!company) {
     return (
@@ -38,7 +44,9 @@ function NewJob() {
 
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-50">Create a new job</h1>
+      <h1 className="mb-6 text-2xl font-bold text-foreground">
+        Create a new job
+      </h1>
       <JobForm companyId={company.id} />
     </div>
   );

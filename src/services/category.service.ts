@@ -30,12 +30,18 @@ export const categoryService = {
   },
 
   async create(payload: CreateCategoryPayload): Promise<Category> {
-    const { data } = await api.post<ApiResponse<Category>>("/categories", payload);
+    const { data } = await api.post<ApiResponse<Category>>(
+      "/categories",
+      payload,
+    );
     return data.data;
   },
 
   async update(id: string, payload: UpdateCategoryPayload): Promise<Category> {
-    const { data } = await api.patch<ApiResponse<Category>>(`/categories/${id}`, payload);
+    const { data } = await api.patch<ApiResponse<Category>>(
+      `/categories/${id}`,
+      payload,
+    );
     return data.data;
   },
 
