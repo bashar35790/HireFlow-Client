@@ -7,7 +7,6 @@ import { useMyCompany } from "@/hooks/useCompanies";
 import { CompanyForm } from "@/components/employer/company-form";
 import { Loading } from "@/components/shared/loading";
 import { ErrorState } from "@/components/shared/error-state";
-import { Button } from "@heroui/react";
 import { motion } from "framer-motion";
 
 export default function CompanyPage() {
@@ -79,11 +78,13 @@ function CompanyManage() {
               </p>
             </div>
             {company && (
-              <Link href={`/companies/${company.id}`} target="_blank">
-                <Button variant="outline" size="md" className="rounded-full border-foreground/20 hover:border-primary hover:text-primary">
-                  View Public Profile
-                  <span className="ml-1">↗</span>
-                </Button>
+              <Link
+                href={`/companies/${company.id}`}
+                target="_blank"
+                className="inline-flex items-center gap-1.5 rounded-full border border-foreground/20 px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary"
+              >
+                View Public Profile
+                <span className="text-base">↗</span>
               </Link>
             )}
           </div>
