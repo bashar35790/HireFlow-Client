@@ -233,7 +233,14 @@ function JobsContent() {
               </p>
               <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                 {data.data.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <div
+                    key={job.id}
+                    className="group h-full rounded-3xl bg-card p-2 transition-all hover:shadow-2xl hover:shadow-primary/10 dark:bg-card"
+                  >
+                    <div className="h-full rounded-2xl bg-background border border-[var(--card-border)] p-6 transition-colors group-hover:border-primary/20">
+                      <JobCard job={job} />
+                    </div>
+                  </div>
                 ))}
               </div>
               <div className="mt-8">
