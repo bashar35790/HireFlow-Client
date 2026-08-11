@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button, Input } from "@heroui/react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useJobs } from "@/hooks/useJobs";
 import { JobCard } from "@/components/jobs/job-card";
 import { Loading } from "@/components/shared/loading";
@@ -22,7 +22,7 @@ export default function HomePage() {
     router.push(`/jobs${params}`);
   }
 
-  const fadeUp = {
+  const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -31,7 +31,7 @@ export default function HomePage() {
     },
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -92,7 +92,6 @@ export default function HomePage() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search for premium roles, companies, or keywords..."
               aria-label="Search jobs"
-              variant="flat"
               className="flex-1 bg-transparent"
             />
             <Button
@@ -118,7 +117,7 @@ export default function HomePage() {
               </Link>
               <Link href="/jobs">
                 <Button
-                  variant="bordered"
+                  variant="outline"
                   size="lg"
                   className="rounded-full border-foreground/20 px-8 font-medium text-foreground transition-all hover:border-primary hover:text-primary"
                 >

@@ -34,34 +34,30 @@ export function JobCard({ job }: { job: Job }) {
           <div className="flex flex-wrap items-center gap-2 mt-auto pt-2">
             <Chip
               size="sm"
-              variant="flat"
-              classNames={{ base: "bg-foreground/5 text-foreground/70" }}
+              variant="soft"
+              className="bg-foreground/5 text-foreground/70"
             >
               {job.category?.name ?? "Premium Role"}
             </Chip>
             <Chip
               size="sm"
-              variant="flat"
-              classNames={{ base: "bg-foreground/5 text-foreground/70" }}
+              variant="soft"
+              className="bg-foreground/5 text-foreground/70"
             >
               {job.location}
             </Chip>
             <Chip
               size="sm"
-              variant="flat"
-              classNames={{
-                base: "bg-primary/10 text-primary border border-primary/20",
-              }}
+              variant="soft"
+              className="bg-primary/10 text-primary border border-primary/20"
             >
               {JOB_TYPES_MAP[job.jobType] ?? job.jobType}
             </Chip>
             {job.salaryMin != null && (
               <Chip
                 size="sm"
-                variant="flat"
-                classNames={{
-                  base: "bg-[#f04c24]/10 text-[#f04c24] border border-[#f04c24]/20 font-medium",
-                }}
+                variant="soft"
+                className="bg-[#f04c24]/10 text-[#f04c24] border border-[#f04c24]/20 font-medium"
               >
                 {formatSalary(job.salaryMin, job.salaryMax)}
               </Chip>

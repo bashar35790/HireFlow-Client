@@ -103,7 +103,7 @@ export function Header() {
                 </p>
               </div>
               <Button
-                variant="bordered"
+                variant="outline"
                 size="md"
                 className="rounded-full border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-all"
                 isDisabled={isPendingLogout}
@@ -116,7 +116,7 @@ export function Header() {
             <>
               <Link href="/login">
                 <Button
-                  variant="light"
+                  variant="ghost"
                   size="md"
                   className="rounded-full font-medium text-foreground hover:bg-foreground/5"
                 >
@@ -125,7 +125,7 @@ export function Header() {
               </Link>
               <Link href="/register">
                 <Button
-                  variant="solid"
+                  variant="primary"
                   size="md"
                   className="rounded-full bg-primary text-white shadow-md shadow-primary/30 transition-all hover:bg-primary-hover hover:-translate-y-0.5"
                 >
