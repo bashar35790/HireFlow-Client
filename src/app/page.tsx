@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Button, Input } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { motion, Variants } from "framer-motion";
 import { useJobs } from "@/hooks/useJobs";
 import { JobCard } from "@/components/jobs/job-card";
@@ -16,7 +16,7 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
   const { data, isLoading, isError } = useJobs({ limit: 6 });
 
-  function submitSearch(e: FormEvent) {
+  function submitSearch(e: React.FormEvent) {
     e.preventDefault();
     const params = search ? `?search=${encodeURIComponent(search)}` : "";
     router.push(`/jobs${params}`);
@@ -43,8 +43,8 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden bg-background">
-      {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center px-4 py-24 sm:py-32 lg:py-40">
+      {/* Hero Section — full viewport height, fully centered */}
+      <section className="relative flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden px-4 py-16">
         {/* Decorative Luxury Gradients */}
         <div className="absolute top-0 -left-1/4 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 -right-1/4 h-[500px] w-[500px] rounded-full bg-[#f04c24]/10 blur-[120px] pointer-events-none" />
@@ -85,21 +85,31 @@ export default function HomePage() {
           <motion.form
             variants={fadeUp}
             onSubmit={submitSearch}
-            className="mx-auto mt-12 flex w-full max-w-2xl items-center gap-3 rounded-full bg-card p-3 shadow-2xl shadow-primary/5 ring-1 ring-[var(--card-border)] backdrop-blur-xl dark:bg-card dark:ring-white/10"
+            className="mx-auto mt-12 w-full max-w-2xl"
           >
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search for premium roles, companies, or keywords..."
-              aria-label="Search jobs"
-              className="flex-1 bg-transparent"
-            />
-            <Button
-              type="submit"
-              className="rounded-full bg-primary px-8 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary-hover hover:scale-105"
-            >
-              Discover
-            </Button>
+            <div className="flex items-center gap-0 rounded-2xl bg-card shadow-2xl shadow-primary/10 ring-1 ring-[var(--card-border)] overflow-hidden">
+              {/* Search icon */}
+              <span className="flex shrink-0 items-center pl-5 text-foreground/40">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+                </svg>
+              </span>
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search roles, companies, keywords…"
+                aria-label="Search jobs"
+                className="flex-1 bg-transparent px-4 py-4 text-base text-foreground placeholder:text-foreground/40 outline-none"
+              />
+              <div className="p-2 pr-2">
+                <button
+                  type="submit"
+                  className="rounded-xl bg-gradient-to-r from-primary to-[#f04c24] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/40 active:scale-95"
+                >
+                  Discover
+                </button>
+              </div>
+            </div>
           </motion.form>
 
           {!user && (
