@@ -79,7 +79,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden flex-1 justify-center items-center gap-2 md:flex">
-          <div className="flex items-center rounded-full border border-foreground/10 bg-white/50 p-1 shadow-sm dark:bg-foreground/5 backdrop-blur-md">
+          <div className="flex items-center rounded-full border border-[var(--card-border)] bg-card/80 p-1 shadow-sm backdrop-blur-md">
             {links.map((link) => (
               <NavLink
                 key={link.href}

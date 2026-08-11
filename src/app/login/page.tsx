@@ -107,7 +107,7 @@ function LoginForm() {
             type="email"
             placeholder="you@example.com"
             aria-label="Email"
-            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+            className="w-full rounded-xl border border-[var(--card-border)] bg-card px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-card"
           />
           {errors.email && (
             <p className="text-xs font-medium text-red-600">
@@ -133,7 +133,7 @@ function LoginForm() {
             type="password"
             placeholder="••••••••"
             aria-label="Password"
-            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+            className="w-full rounded-xl border border-[var(--card-border)] bg-card px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-card"
           />
           {errors.password && (
             <p className="text-xs font-medium text-red-600">

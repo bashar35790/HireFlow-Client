@@ -2,9 +2,16 @@
 @import "@heroui/styles";
 
 :root {
-  --background: #fff4ef; /* Light Cream */
-  --foreground: #3d1604; /* Dark Brown */
-  
+  --background: #fff4ef;        /* Warm Cream */
+  --foreground: #3d1604;        /* Deep Brown — high contrast */
+
+  --card: #fdf0e8;              /* Card surface — warm, distinct from bg */
+  --card-border: rgba(61,22,4,0.10); /* Subtle warm border */
+  --card-foreground: #3d1604;
+
+  --muted: #f5e6da;             /* Muted surfaces */
+  --muted-foreground: #7a4830;  /* Readable muted text */
+
   --primary: #fc5810;
   --primary-hover: #f04c24;
 }
@@ -12,17 +19,30 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
+  /* Map white → card surface so bg-white renders with proper contrast */
+  --color-white: var(--card);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Since it's a luxury design, we might want a rich dark brown background for dark mode */
-    --background: #1a0a02; 
+    --background: #1a0a02;
     --foreground: #fff4ef;
+
+    --card: #2a1208;            /* Dark warm surface */
+    --card-border: rgba(255,244,239,0.08);
+    --card-foreground: #fff4ef;
+
+    --muted: #3d1a0a;
+    --muted-foreground: #c9956d;
   }
 }
 
@@ -43,9 +63,28 @@ body {
   color: #fff;
 }
 
-/* Premium utility classes */
+/* ─── Premium utility classes ─────────────────────────────── */
 @layer utilities {
+  /* Card surface — clear contrast against the cream background */
+  .card-surface {
+    background-color: var(--card);
+    border: 1px solid var(--card-border);
+    color: var(--card-foreground);
+  }
+
+  /* Glass morphism — uses the card surface for readability */
   .glass {
-    @apply bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+    @apply backdrop-blur-xl shadow-xl;
+    background-color: color-mix(in srgb, var(--card) 80%, transparent);
+    border: 1px solid var(--card-border);
+  }
+
+  /* Table row defaults */
+  .table-row-base {
+    background-color: var(--card);
+    color: var(--card-foreground);
+  }
+  .table-row-base:hover {
+    background-color: var(--muted);
   }
 }

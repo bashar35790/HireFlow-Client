@@ -42,7 +42,7 @@ function RoleCard({
       className={`group relative flex flex-col items-start gap-3 rounded-2xl p-4 text-left transition-all duration-300 ${
         selected
           ? "border border-primary/60 bg-gradient-to-br from-primary/10 to-[#f04c24]/5 shadow-lg shadow-primary/10"
-          : "border border-foreground/10 bg-white/60 hover:border-primary/40 hover:bg-white/80 dark:bg-black/20 dark:hover:bg-black/30"
+          : "border border-[var(--card-border)] bg-card hover:border-primary/40 hover:bg-muted dark:bg-card dark:hover:bg-muted"
       }`}
     >
       <span
@@ -218,7 +218,7 @@ export default function RegisterPage() {
             {...registerField("name")}
             placeholder="Your full name"
             aria-label="Full name"
-            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+            className="w-full rounded-xl border border-[var(--card-border)] bg-card px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-card"
           />
           {errors.name && (
             <p className="text-xs font-medium text-red-600">
@@ -236,7 +236,7 @@ export default function RegisterPage() {
             type="email"
             placeholder="you@example.com"
             aria-label="Email"
-            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+            className="w-full rounded-xl border border-[var(--card-border)] bg-card px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-card"
           />
           {errors.email && (
             <p className="text-xs font-medium text-red-600">
@@ -254,7 +254,7 @@ export default function RegisterPage() {
             type="password"
             placeholder="Minimum 6 characters"
             aria-label="Password"
-            className="w-full rounded-xl border border-foreground/10 bg-white/70 px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-black/30"
+            className="w-full rounded-xl border border-[var(--card-border)] bg-card px-4 py-3 text-foreground placeholder:text-foreground/40 transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-card"
           />
           {errors.password && (
             <p className="text-xs font-medium text-red-600">

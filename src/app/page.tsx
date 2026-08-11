@@ -85,7 +85,7 @@ export default function HomePage() {
           <motion.form
             variants={fadeUp}
             onSubmit={submitSearch}
-            className="mx-auto mt-12 flex w-full max-w-2xl items-center gap-3 rounded-full bg-white/70 p-3 shadow-2xl shadow-primary/5 ring-1 ring-black/5 backdrop-blur-xl dark:bg-black/40 dark:ring-white/10"
+            className="mx-auto mt-12 flex w-full max-w-2xl items-center gap-3 rounded-full bg-card p-3 shadow-2xl shadow-primary/5 ring-1 ring-[var(--card-border)] backdrop-blur-xl dark:bg-card dark:ring-white/10"
           >
             <Input
               value={search}
@@ -176,9 +176,9 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group h-full rounded-3xl bg-white p-2 transition-all hover:shadow-2xl hover:shadow-primary/10 dark:bg-foreground/5"
+                className="group h-full rounded-3xl bg-card p-2 transition-all hover:shadow-2xl hover:shadow-primary/10 dark:bg-card"
               >
-                <div className="h-full rounded-2xl bg-background/50 border border-foreground/5 p-6 backdrop-blur-sm transition-colors group-hover:border-primary/20">
+                <div className="h-full rounded-2xl bg-background border border-[var(--card-border)] p-6 transition-colors group-hover:border-primary/20">
                   <JobCard job={job} />
                 </div>
               </motion.div>

@@ -146,7 +146,7 @@ function Overview() {
       {stats.map((s) => (
         <div
           key={s.label}
-          className="rounded-2xl border border-foreground/20 bg-white p-6 text-center"
+          className="rounded-2xl border border-[var(--card-border)] bg-card p-6 text-center shadow-sm"
         >
           <p className="text-3xl font-bold text-foreground">{s.value}</p>
           <p className="mt-1 text-sm text-foreground/60">{s.label}</p>
@@ -194,7 +194,7 @@ function DataTable<T>({
           {data.map((row, i) => (
             <tr
               key={i}
-              className="bg-white hover:bg-foreground/5 dark:hover:bg-foreground"
+              className="table-row-base"
             >
               {columns.map((c) => (
                 <td key={c.key} className="px-4 py-3">
@@ -503,7 +503,7 @@ function ApplicationsTab() {
               status: e.target.value as ApplicationStatus,
             })
           }
-          className="rounded-lg border border-foreground/30 bg-white px-2 py-1 text-xs"
+          className="rounded-lg border border-[var(--card-border)] bg-card px-2 py-1 text-xs text-foreground"
         >
           {Object.entries(APPLICATION_STATUS_LABEL).map(([k, v]) => (
             <option key={k} value={k}>
