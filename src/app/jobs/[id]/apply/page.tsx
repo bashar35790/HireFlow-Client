@@ -89,7 +89,7 @@ function ApplyForm() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-linier-to-br from-primary/20 to-[#f04c24]/10 text-4xl text-primary"
+            className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-linear-to-br from-primary/20 to-[#f04c24]/10 text-4xl text-primary"
           >
             ✓
           </motion.div>
@@ -167,7 +167,7 @@ function ApplyForm() {
           <div className="rounded-3xl bg-card border border-card-border p-8 shadow-sm">
             {/* Company avatar + title */}
             <div className="flex items-start gap-5">
-              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-linier-to-br from-primary/20 to-primary/5 border border-primary/10 text-2xl font-bold text-primary shadow-inner">
+              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-primary/20 to-primary/5 border border-primary/10 text-2xl font-bold text-primary shadow-inner">
                 {job.company?.name?.[0] ?? "J"}
               </div>
               <div className="min-w-0">
@@ -225,7 +225,7 @@ function ApplyForm() {
                 },
               ].map((item) => (
                 <li key={item.step} className="flex gap-4">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-linier-to-br from-primary/20 to-primary/5 text-xs font-bold text-primary border border-primary/10">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-primary/20 to-primary/5 text-xs font-bold text-primary border border-primary/10">
                     {item.step}
                   </span>
                   <div>
@@ -334,7 +334,7 @@ function ApplyForm() {
               <button
                 type="submit"
                 disabled={apply.isPending}
-                className="mt-2 w-full rounded-full bg-linier-to-r from-primary to-[#f04c24] py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="mt-2 w-full rounded-full bg-linear-to-r from-primary to-[#f04c24] py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {apply.isPending ? (
                   <span className="flex items-center justify-center gap-2">
