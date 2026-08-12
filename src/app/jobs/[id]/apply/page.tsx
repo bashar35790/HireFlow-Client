@@ -82,14 +82,14 @@ function ApplyForm() {
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="w-full max-w-lg rounded-3xl bg-card border border-[var(--card-border)] p-10 text-center shadow-2xl shadow-primary/5"
+          className="w-full max-w-lg rounded-3xl bg-card border border-card-border p-10 text-center shadow-2xl shadow-primary/5"
         >
           {/* Animated checkmark */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-[#f04c24]/10 text-4xl text-primary"
+            className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-linier-to-br from-primary/20 to-[#f04c24]/10 text-4xl text-primary"
           >
             ✓
           </motion.div>
@@ -118,7 +118,7 @@ function ApplyForm() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href="/dashboard"
-                className="rounded-full bg-gradient-to-r from-primary to-[#f04c24] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl"
+                className="rounded-full bg-linear-to-r from-primary to-[#f04c24] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl"
               >
                 Go to Dashboard
               </Link>
@@ -164,10 +164,10 @@ function ApplyForm() {
           className="flex flex-col gap-6"
         >
           {/* Job header card */}
-          <div className="rounded-3xl bg-card border border-[var(--card-border)] p-8 shadow-sm">
+          <div className="rounded-3xl bg-card border border-card-border p-8 shadow-sm">
             {/* Company avatar + title */}
             <div className="flex items-start gap-5">
-              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10 text-2xl font-bold text-primary shadow-inner">
+              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-linier-to-br from-primary/20 to-primary/5 border border-primary/10 text-2xl font-bold text-primary shadow-inner">
                 {job.company?.name?.[0] ?? "J"}
               </div>
               <div className="min-w-0">
@@ -202,7 +202,7 @@ function ApplyForm() {
           </div>
 
           {/* What happens next */}
-          <div className="rounded-3xl bg-card border border-[var(--card-border)] p-8 shadow-sm">
+          <div className="rounded-3xl bg-card border border-card-border p-8 shadow-sm">
             <h2 className="mb-5 text-sm font-bold uppercase tracking-widest text-foreground/50">
               What happens next
             </h2>
@@ -225,7 +225,7 @@ function ApplyForm() {
                 },
               ].map((item) => (
                 <li key={item.step} className="flex gap-4">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/5 text-xs font-bold text-primary border border-primary/10">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-linier-to-br from-primary/20 to-primary/5 text-xs font-bold text-primary border border-primary/10">
                     {item.step}
                   </span>
                   <div>
@@ -248,7 +248,7 @@ function ApplyForm() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="sticky top-[100px] rounded-3xl bg-card border border-[var(--card-border)] p-8 shadow-xl shadow-primary/5">
+          <div className="sticky top-52 rounded-3xl bg-card border border-card-border p-8 shadow-xl shadow-primary/5">
             {/* Decorative gradient */}
             <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
 
@@ -301,7 +301,7 @@ function ApplyForm() {
                     type="url"
                     placeholder="https://drive.google.com/your-resume"
                     aria-label="Resume URL"
-                    className="w-full rounded-xl border border-[var(--card-border)] bg-background py-3 pl-10 pr-4 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="w-full rounded-xl border border-card-border bg-background py-3 pl-10 pr-4 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                   />
                 </div>
                 {errors.resume && (
@@ -321,7 +321,7 @@ function ApplyForm() {
                   placeholder="Tell the employer why you're a great fit for this role…"
                   aria-label="Cover letter"
                   rows={7}
-                  className="w-full resize-none rounded-xl border border-[var(--card-border)] bg-background px-4 py-3 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="w-full resize-none rounded-xl border border-card-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-foreground/40 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
                 {errors.coverLetter && (
                   <p className="text-xs font-medium text-red-500">
@@ -334,7 +334,7 @@ function ApplyForm() {
               <button
                 type="submit"
                 disabled={apply.isPending}
-                className="mt-2 w-full rounded-full bg-gradient-to-r from-primary to-[#f04c24] py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="mt-2 w-full rounded-full bg-linier-to-r from-primary to-[#f04c24] py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {apply.isPending ? (
                   <span className="flex items-center justify-center gap-2">

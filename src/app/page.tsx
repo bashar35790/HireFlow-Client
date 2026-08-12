@@ -44,10 +44,10 @@ export default function HomePage() {
   return (
     <div className="flex flex-1 flex-col overflow-hidden bg-background">
       {/* Hero Section — full viewport height, fully centered */}
-      <section className="relative flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden px-4 py-16">
+      <section className="relative flex min-h-[calc(100svh-130px)] flex-col items-center justify-center overflow-hidden px-4 py-14 sm:min-h-[calc(100svh-80px)] sm:py-16">
         {/* Decorative Luxury Gradients */}
-        <div className="absolute top-0 -left-1/4 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 -right-1/4 h-[500px] w-[500px] rounded-full bg-[#f04c24]/10 blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 -left-1/4 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[100px] pointer-events-none sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
+        <div className="absolute bottom-0 -right-1/4 h-[300px] w-[300px] rounded-full bg-[#f04c24]/10 blur-[100px] pointer-events-none sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
 
         <motion.div
           className="relative z-10 mx-auto max-w-5xl text-center"
@@ -57,7 +57,7 @@ export default function HomePage() {
         >
           <motion.div
             variants={fadeUp}
-            className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary shadow-sm backdrop-blur-sm"
+            className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur-sm sm:px-4 sm:text-sm"
           >
             <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
             Elevate Your Career with HireFlow
@@ -65,7 +65,7 @@ export default function HomePage() {
 
           <motion.h1
             variants={fadeUp}
-            className="text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl lg:text-8xl"
+            className="text-4xl font-extrabold tracking-tight text-foreground leading-[1.1] sm:text-5xl md:text-6xl lg:text-7xl"
           >
             Find the job that fits <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-primary to-[#f04c24] bg-clip-text text-transparent drop-shadow-sm">
@@ -75,7 +75,7 @@ export default function HomePage() {
 
           <motion.p
             variants={fadeUp}
-            className="mx-auto mt-6 max-w-2xl text-lg text-foreground/70 sm:text-xl font-light leading-relaxed"
+            className="mx-auto mt-5 max-w-2xl text-base text-foreground/70 sm:mt-6 sm:text-lg sm:text-xl font-light leading-relaxed"
           >
             Experience a curated selection of premium opportunities from
             companies that value excellence. Join our exclusive network of
@@ -89,7 +89,7 @@ export default function HomePage() {
           >
             <div className="flex items-center gap-0 rounded-2xl bg-card shadow-2xl shadow-primary/10 ring-1 ring-[var(--card-border)] overflow-hidden">
               {/* Search icon */}
-              <span className="flex shrink-0 items-center pl-5 text-foreground/40">
+              <span className="flex shrink-0 items-center pl-3 text-foreground/40 sm:pl-5">
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
                 </svg>
@@ -99,14 +99,15 @@ export default function HomePage() {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search roles, companies, keywords…"
                 aria-label="Search jobs"
-                className="flex-1 bg-transparent px-4 py-4 text-base text-foreground placeholder:text-foreground/40 outline-none"
+                className="min-w-0 flex-1 bg-transparent px-3 py-3.5 text-sm text-foreground placeholder:text-foreground/40 outline-none sm:px-4 sm:py-4 sm:text-base"
               />
-              <div className="p-2 pr-2">
+              <div className="p-1.5 sm:p-2">
                 <button
                   type="submit"
-                  className="rounded-xl bg-gradient-to-r from-primary to-[#f04c24] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/40 active:scale-95"
+                  className="rounded-xl bg-gradient-to-r from-primary to-[#f04c24] px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/40 active:scale-95 sm:px-7 sm:py-3 sm:text-sm"
                 >
-                  Discover
+                  <span className="sm:hidden">Go</span>
+                  <span className="hidden sm:inline">Discover</span>
                 </button>
               </div>
             </div>
@@ -115,21 +116,21 @@ export default function HomePage() {
           {!user && (
             <motion.div
               variants={fadeUp}
-              className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              className="mt-10 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
             >
-              <Link href="/register">
+              <Link href="/register" className="w-full max-w-xs sm:w-auto">
                 <Button
                   size="lg"
-                  className="rounded-full bg-foreground px-8 font-medium text-background transition-transform hover:scale-105 shadow-xl"
+                  className="w-full rounded-full bg-foreground px-8 font-medium text-background transition-transform hover:scale-105 shadow-xl"
                 >
                   Get Started Free
                 </Button>
               </Link>
-              <Link href="/jobs">
+              <Link href="/jobs" className="w-full max-w-xs sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="rounded-full border-foreground/20 px-8 font-medium text-foreground transition-all hover:border-primary hover:text-primary"
+                  className="w-full rounded-full border-foreground/20 px-8 font-medium text-foreground transition-all hover:border-primary hover:text-primary"
                 >
                   Browse Collection
                 </Button>
