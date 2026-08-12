@@ -44,7 +44,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-1 flex-col overflow-hidden bg-background">
       {/* Hero Section — full viewport height, fully centered */}
-      <section className="relative flex min-h-[calc(100svh-130px)] flex-col items-center justify-center overflow-hidden px-4 py-14 sm:min-h-[calc(100svh-80px)] sm:py-16">
+      <section className="relative flex min-h-[calc(100svh-64px)] flex-col items-center justify-center overflow-hidden px-4 py-14 sm:min-h-[calc(100svh-80px)] sm:py-16">
         {/* Decorative Luxury Gradients */}
         <div className="absolute top-0 -left-1/4 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[100px] pointer-events-none sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
         <div className="absolute bottom-0 -right-1/4 h-[300px] w-[300px] rounded-full bg-[#f04c24]/10 blur-[100px] pointer-events-none sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
