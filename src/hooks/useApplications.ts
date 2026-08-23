@@ -56,7 +56,6 @@ export function useApplyToJob() {
       queryClient.invalidateQueries({
         queryKey: jobKeys.detail(application.jobId),
       });
-      queryClient.invalidateQueries({ queryKey: jobKeys.lists() });
     },
   });
 }
