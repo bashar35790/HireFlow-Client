@@ -13,5 +13,7 @@ export function useCategories() {
     queryKey: categoryKeys.list(),
     queryFn: () => categoryService.list(1, 100),
     placeholderData: (previous) => previous,
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 60 * 2,
   });
 }
