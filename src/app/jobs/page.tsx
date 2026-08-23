@@ -64,12 +64,38 @@ function JobsContent() {
     [buildParams, router],
   );
 
+  // Keep track of the actual current values to avoid unnecessary pushParams calls
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+  const [debouncedLocation, setDebouncedLocation] = useState(location);
+  const [debouncedSalaryMin, setDebouncedSalaryMin] = useState(salaryMin);
+  const [debouncedSalaryMax, setDebouncedSalaryMax] = useState(salaryMax);
+
   useEffect(() => {
     const id = window.setTimeout(() => {
-      pushParams(1);
+      let changed = false;
+      if (search !== debouncedSearch) {
+        setDebouncedSearch(search);
+        changed = true;
+      }
+      if (location !== debouncedLocation) {
+        setDebouncedLocation(location);
+        changed = true;
+      }
+      if (salaryMin !== debouncedSalaryMin) {
+        setDebouncedSalaryMin(salaryMin);
+        changed = true;
+      }
+      if (salaryMax !== debouncedSalaryMax) {
+        setDebouncedSalaryMax(salaryMax);
+        changed = true;
+      }
+
+      if (changed) {
+        pushParams(1);
+      }
     }, 600);
     return () => window.clearTimeout(id);
-  }, [search, location, salaryMin, salaryMax, pushParams]);
+  }, [search, location, salaryMin, salaryMax, debouncedSearch, debouncedLocation, debouncedSalaryMin, debouncedSalaryMax, pushParams]);
 
   function clearFilters() {
     setSearch("");
