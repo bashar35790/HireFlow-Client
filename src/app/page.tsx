@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 import { useJobs } from "@/hooks/useJobs";
 import { JobCard } from "@/components/jobs/job-card";
 import { Loading } from "@/components/shared/loading";
@@ -79,6 +79,46 @@ const FAQS = [
     answer: "Absolutely. You have full control over your privacy settings and who can view your profile details.",
   },
 ];
+
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <div className="border-b border-foreground/10 last:border-0 py-8">
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="flex w-full items-center justify-between text-left group focus:outline-none"
+      >
+        <h3 className="text-xl sm:text-2xl font-medium text-foreground transition-colors group-hover:text-primary">
+          {question}
+        </h3>
+        <span 
+          className="ml-6 flex size-12 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-card text-foreground/50 transition-all duration-500 group-hover:border-primary/30 group-hover:text-primary group-hover:shadow-lg group-hover:shadow-primary/10"
+          style={{ transform: isOpen ? "rotate(135deg)" : "rotate(0deg)" }}
+        >
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="pt-6 pr-12 text-foreground/60 font-light leading-relaxed text-lg">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -388,7 +428,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ Section - Luxury Accordion */}
       <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-32 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <motion.div
@@ -406,25 +446,17 @@ export default function HomePage() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col"
+          >
             {FAQS.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="rounded-3xl bg-background border border-foreground/5 p-10 transition-all duration-500 hover:shadow-xl hover:border-primary/20"
-              >
-                <h3 className="text-xl font-bold text-foreground mb-4 leading-snug">
-                  {faq.question}
-                </h3>
-                <p className="text-foreground/60 font-light leading-relaxed">
-                  {faq.answer}
-                </p>
-              </motion.div>
+              <FAQItem key={index} question={faq.question} answer={faq.answer} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
