@@ -255,7 +255,7 @@ export default function HomePage() {
       </section>
 
       {/* Latest Jobs Section */}
-      <section className="relative mx-auto w-full max-w-7xl flex-1 px-4 py-32 sm:px-6 lg:px-8">
+      <section className="relative mx-auto w-full max-w-7xl flex-1 px-4 py-20 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -327,7 +327,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-32 sm:px-6 lg:px-8">
+      <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -373,7 +373,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="relative px-4 py-32 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative px-4 py-20 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[800px] w-[800px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
         <div className="relative mx-auto max-w-7xl">
           <motion.div
@@ -429,7 +429,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section - Luxury Accordion */}
-      <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-32 sm:px-6 lg:px-8">
+      <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -461,7 +461,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative px-4 py-32 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative px-4 py-20 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5" />
         <motion.div
           initial={{ opacity: 0, y: 40 }}
