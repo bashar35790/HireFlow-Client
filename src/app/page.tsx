@@ -133,11 +133,11 @@ export default function HomePage() {
   }
 
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
 
@@ -145,9 +145,7 @@ export default function HomePage() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
@@ -156,8 +154,8 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative flex h-screen min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 text-center">
         {/* Luxury Glow Effects */}
-        <div className="absolute top-0 -left-1/4 h-125 w-125 rounded-full bg-primary/15 blur-[120px] pointer-events-none sm:h-150 sm:w-150 sm:blur-[150px]" />
-        <div className="absolute bottom-0 -right-1/4 h-125 w-125 rounded-full bg-[#f04c24]/10 blur-[120px] pointer-events-none sm:h-150 sm:w-150 sm:blur-[150px]" />
+        <div className="absolute top-0 -left-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 -right-1/4 h-64 w-64 rounded-full bg-[#f04c24]/8 blur-3xl pointer-events-none" />
 
         {/* Subtle grid pattern background */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 mask-[radial-gradient(ellipse_at_center,black_50%,transparent_100%)] pointer-events-none" />
@@ -201,7 +199,7 @@ export default function HomePage() {
           >
             <div className="relative rounded-2xl bg-linear-to-b from-card to-background p-px shadow-2xl shadow-primary/10 overflow-hidden">
               <div className="absolute inset-0 bg-linear-to-r from-primary/20 via-[#f04c24]/20 to-primary/20 opacity-50 blur-xl" />
-              <div className="relative flex items-center gap-0 rounded-2xl bg-card/80 backdrop-blur-xl">
+              <div className="relative flex items-center gap-0 rounded-2xl bg-card">
                 <span className="flex shrink-0 items-center pl-4 text-foreground/40 sm:pl-6">
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
@@ -257,10 +255,10 @@ export default function HomePage() {
       {/* Latest Jobs Section */}
       <section className="relative mx-auto w-full max-w-7xl flex-1 px-4 py-20 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           className="mb-16 flex flex-col items-center justify-between gap-6 border-b border-foreground/10 pb-8 sm:flex-row sm:items-end"
         >
           <div>
@@ -297,13 +295,13 @@ export default function HomePage() {
             {data.data.map((job, i) => (
               <motion.div
                 key={job.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group h-full rounded-3xl bg-card/50 p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:bg-card border border-transparent hover:border-card-border"
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.06, ease: "easeOut" }}
+                className="group h-full rounded-3xl bg-card/50 p-2 will-change-transform hover:shadow-xl hover:shadow-primary/10 hover:bg-card border border-transparent hover:border-[var(--card-border)] transition-[box-shadow,background-color,border-color] duration-300"
               >
-                <div className="h-full rounded-2xl bg-background border border-card-border p-8 transition-colors duration-500 group-hover:border-primary/20">
+                <div className="h-full rounded-2xl bg-background border border-[var(--card-border)] p-8 transition-colors duration-200 group-hover:border-primary/20">
                   <JobCard job={job} />
                 </div>
               </motion.div>
@@ -330,11 +328,11 @@ export default function HomePage() {
       <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-20 text-center"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="mb-12 text-center"
           >
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               The HireFlow Advantage
@@ -351,13 +349,13 @@ export default function HomePage() {
             {FEATURES.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative rounded-3xl bg-background/50 border border-foreground/5 p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hover:bg-card hover:border-card-border"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}
+                className="group relative rounded-3xl bg-background/50 border border-foreground/5 p-10 will-change-transform hover:shadow-xl hover:shadow-primary/5 hover:bg-card hover:border-[var(--card-border)] transition-[box-shadow,background-color,border-color] duration-300"
               >
-                <div className="mb-8 inline-flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-primary/10 to-transparent text-primary border border-primary/10 shadow-sm transition-transform duration-500 group-hover:scale-110 group-hover:bg-primary/20">
+                <div className="mb-8 inline-flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary border border-primary/10 transition-transform duration-200 group-hover:scale-105 group-hover:bg-primary/20">
                   {feature.icon}
                 </div>
                 <h3 className="mb-4 text-2xl font-bold text-foreground">
@@ -374,14 +372,14 @@ export default function HomePage() {
 
       {/* Testimonials Section */}
       <section className="relative px-4 py-20 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[800px] w-[800px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
         <div className="relative mx-auto max-w-7xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-20 text-center"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="mb-12 text-center"
           >
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               Testimonials
@@ -395,11 +393,11 @@ export default function HomePage() {
             {TESTIMONIALS.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="glass rounded-3xl p-10 relative border border-white/10 dark:border-white/5"
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.08, ease: "easeOut" }}
+                className="glass rounded-3xl p-10 relative border border-white/10 dark:border-white/5 will-change-transform"
               >
                 <div className="absolute -top-3 -left-3 text-primary opacity-20">
                   <svg className="h-16 w-16" fill="currentColor" viewBox="0 0 24 24">
@@ -432,11 +430,11 @@ export default function HomePage() {
       <section className="relative bg-card/20 border-y border-foreground/5 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-16 text-center"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="mb-12 text-center"
           >
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               Inquiries
@@ -447,10 +445,10 @@ export default function HomePage() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="flex flex-col"
           >
             {FAQS.map((faq, index) => (
@@ -464,10 +462,10 @@ export default function HomePage() {
       <section className="relative px-4 py-20 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5" />
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="relative mx-auto max-w-5xl rounded-[3rem] bg-foreground p-12 text-center sm:p-24 shadow-2xl overflow-hidden"
         >
           {/* Subtle glow inside the dark container */}
