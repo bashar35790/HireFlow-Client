@@ -82,17 +82,17 @@ const FAQS = [
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   return (
     <div className="border-b border-foreground/10 last:border-0 py-8">
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
+      <button
+        onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between text-left group focus:outline-none"
       >
         <h3 className="text-xl sm:text-2xl font-medium text-foreground transition-colors group-hover:text-primary">
           {question}
         </h3>
-        <span 
+        <span
           className="ml-6 flex size-12 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-card text-foreground/50 transition-all duration-500 group-hover:border-primary/30 group-hover:text-primary group-hover:shadow-lg group-hover:shadow-primary/10"
           style={{ transform: isOpen ? "rotate(135deg)" : "rotate(0deg)" }}
         >
@@ -154,23 +154,23 @@ export default function HomePage() {
   return (
     <div className="flex flex-1 flex-col overflow-hidden bg-background">
       {/* Hero Section */}
-      <section className="relative flex min-h-[calc(100svh-64px)] flex-col items-center justify-center overflow-hidden px-4 py-20 sm:min-h-[calc(100svh-80px)] sm:py-24">
+      <section className="relative flex h-screen min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 text-center">
         {/* Luxury Glow Effects */}
-        <div className="absolute top-0 -left-1/4 h-[500px] w-[500px] rounded-full bg-primary/15 blur-[120px] pointer-events-none sm:h-[700px] sm:w-[700px] sm:blur-[150px]" />
-        <div className="absolute bottom-0 -right-1/4 h-[500px] w-[500px] rounded-full bg-[#f04c24]/10 blur-[120px] pointer-events-none sm:h-[700px] sm:w-[700px] sm:blur-[150px]" />
-        
+        <div className="absolute top-0 -left-1/4 h-125 w-125 rounded-full bg-primary/15 blur-[120px] pointer-events-none sm:h-150 sm:w-150 sm:blur-[150px]" />
+        <div className="absolute bottom-0 -right-1/4 h-125 w-125 rounded-full bg-[#f04c24]/10 blur-[120px] pointer-events-none sm:h-150 sm:w-150 sm:blur-[150px]" />
+
         {/* Subtle grid pattern background */}
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-5 mask-[radial-gradient(ellipse_at_center,black_50%,transparent_100%)] pointer-events-none" />
 
         <motion.div
-          className="relative z-10 mx-auto max-w-5xl text-center"
+          className="relative z-10 mx-auto max-w-5xl -mt-16 text-center"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
           <motion.div
             variants={fadeUp}
-            className="mb-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md"
+            className="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-md"
           >
             <span className="flex h-2 w-2 rounded-full bg-primary mr-3 animate-pulse"></span>
             Elevate Your Career
@@ -181,14 +181,14 @@ export default function HomePage() {
             className="text-5xl font-extrabold tracking-tight text-foreground leading-[1.1] sm:text-6xl md:text-7xl lg:text-8xl"
           >
             The premium standard <br className="hidden sm:block" />
-            <span className="font-serif italic font-medium bg-gradient-to-r from-primary to-[#f04c24] bg-clip-text text-transparent">
+            <span className="font-serif italic font-medium bg-linear-to-r from-primary to-[#f04c24] bg-clip-text text-transparent">
               in recruitment.
             </span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
-            className="mx-auto mt-8 max-w-2xl text-lg text-foreground/60 sm:mt-10 sm:text-xl font-light leading-relaxed"
+            className="mx-auto mt-4 max-w-2xl text-base text-foreground/60 sm:text-lg font-light leading-relaxed"
           >
             Experience a curated selection of exceptional opportunities from
             companies that demand excellence. Join our exclusive network today.
@@ -197,10 +197,10 @@ export default function HomePage() {
           <motion.form
             variants={fadeUp}
             onSubmit={submitSearch}
-            className="mx-auto mt-14 w-full max-w-2xl"
+            className="mx-auto mt-8 w-full max-w-2xl"
           >
-            <div className="relative rounded-2xl bg-gradient-to-b from-card to-background p-[1px] shadow-2xl shadow-primary/10 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-[#f04c24]/20 to-primary/20 opacity-50 blur-xl" />
+            <div className="relative rounded-2xl bg-linear-to-b from-card to-background p-px shadow-2xl shadow-primary/10 overflow-hidden">
+              <div className="absolute inset-0 bg-linear-to-r from-primary/20 via-[#f04c24]/20 to-primary/20 opacity-50 blur-xl" />
               <div className="relative flex items-center gap-0 rounded-2xl bg-card/80 backdrop-blur-xl">
                 <span className="flex shrink-0 items-center pl-4 text-foreground/40 sm:pl-6">
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -230,12 +230,12 @@ export default function HomePage() {
           {!user && (
             <motion.div
               variants={fadeUp}
-              className="mt-12 flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row sm:gap-6"
+              className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
             >
               <Link href="/register" className="w-full max-w-xs sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full rounded-full bg-gradient-to-r from-primary to-[#f04c24] px-10 py-6 text-sm font-semibold text-white transition-transform hover:scale-105 shadow-xl shadow-primary/20"
+                  className="w-full rounded-full bg-linear-to-r from-primary to-[#f04c24] px-10 py-6 text-sm font-semibold text-white transition-transform hover:scale-105 shadow-xl shadow-primary/20"
                 >
                   Join the Network
                 </Button>
@@ -283,11 +283,11 @@ export default function HomePage() {
         </motion.div>
 
         {isLoading ? (
-          <div className="flex min-h-[400px] items-center justify-center">
+          <div className="flex min-h-100 items-center justify-center">
             <Loading />
           </div>
         ) : isError ? (
-          <div className="flex min-h-[200px] items-center justify-center rounded-3xl bg-red-50/50 text-red-600 dark:bg-red-900/10 border border-red-500/20">
+          <div className="flex min-h-100 items-center justify-center rounded-3xl bg-red-50/50 text-red-600 dark:bg-red-900/10 border border-red-500/20">
             <p className="font-medium">
               Unable to load the collection. Please try again later.
             </p>
@@ -301,9 +301,9 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group h-full rounded-3xl bg-card/50 p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:bg-card border border-transparent hover:border-[var(--card-border)]"
+                className="group h-full rounded-3xl bg-card/50 p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:bg-card border border-transparent hover:border-card-border"
               >
-                <div className="h-full rounded-2xl bg-background border border-[var(--card-border)] p-8 transition-colors duration-500 group-hover:border-primary/20">
+                <div className="h-full rounded-2xl bg-background border border-card-border p-8 transition-colors duration-500 group-hover:border-primary/20">
                   <JobCard job={job} />
                 </div>
               </motion.div>
@@ -355,9 +355,9 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative rounded-3xl bg-background/50 border border-foreground/5 p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hover:bg-card hover:border-[var(--card-border)]"
+                className="group relative rounded-3xl bg-background/50 border border-foreground/5 p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hover:bg-card hover:border-card-border"
               >
-                <div className="mb-8 inline-flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 to-transparent text-primary border border-primary/10 shadow-sm transition-transform duration-500 group-hover:scale-110 group-hover:bg-primary/20">
+                <div className="mb-8 inline-flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-primary/10 to-transparent text-primary border border-primary/10 shadow-sm transition-transform duration-500 group-hover:scale-110 group-hover:bg-primary/20">
                   {feature.icon}
                 </div>
                 <h3 className="mb-4 text-2xl font-bold text-foreground">
@@ -472,7 +472,7 @@ export default function HomePage() {
         >
           {/* Subtle glow inside the dark container */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-[radial-gradient(ellipse_at_center,rgba(240,76,36,0.15)_0%,transparent_70%)] pointer-events-none" />
-          
+
           <h2 className="relative z-10 text-4xl font-extrabold tracking-tight text-background sm:text-6xl mb-8">
             Begin Your Next Chapter.
           </h2>

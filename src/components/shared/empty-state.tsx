@@ -16,9 +16,9 @@ export function EmptyState({
   icon,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-[var(--card-border)] bg-card px-6 py-20 text-center">
+    <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-card-border bg-card px-6 py-20 text-center">
       {/* Icon */}
-      <div className="flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-[#f04c24]/5 border border-primary/10 text-primary">
+      <div className="flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-primary/15 to-[#f04c24]/5 border border-primary/10 text-primary">
         {icon ?? (
           <svg
             className="h-7 w-7"
@@ -50,7 +50,7 @@ export function EmptyState({
       {actionLabel && actionHref && (
         <Link
           href={actionHref}
-          className="mt-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-[#f04c24] px-7 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/40"
+          className="mt-2 inline-flex items-center gap-2 rounded-full bg-linear-to-r from-primary to-[#f04c24] px-7 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/40"
         >
           {actionLabel}
           <svg

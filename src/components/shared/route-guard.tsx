@@ -29,7 +29,7 @@ export function RouteGuard({
     if (roles && !roles.includes(user.role)) {
       router.replace("/");
     }
-  }, [isLoading, user, roles?.join(","), redirectTo, router]);
+  }, [isLoading, user, redirectTo, router, roles]);
 
   if (isLoading || !user || (roles && !roles.includes(user.role))) {
     return <Loading label="Checking access…" />;
