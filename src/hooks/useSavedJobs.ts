@@ -33,10 +33,8 @@ export function useSaveJob() {
 export function useSavedJobIds() {
   return useQuery({
     queryKey: [...savedJobKeys.all, "ids"],
-    queryFn: async (): Promise<Set<string>> => {
-      const { data } = await savedJobService.getMy(1, 100);
-      return new Set(data.map((s: SavedJob) => s.jobId));
-    },
+    queryFn: () => savedJobService.getMy(1, 100),
+    select: (res): Set<string> => new Set(res.data.map((s: SavedJob) => s.jobId)),
     staleTime: 1000 * 30,
   });
 }
