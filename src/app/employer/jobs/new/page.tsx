@@ -43,11 +43,29 @@ function NewJob() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
-      <h1 className="mb-6 text-2xl font-bold text-foreground">
-        Create a new job
-      </h1>
-      <JobForm companyId={company.id} />
+    <div className="relative flex flex-1 flex-col overflow-hidden">
+      <div className="pointer-events-none absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-[#f04c24]/10 blur-[120px]" />
+
+      <div className="relative z-10 mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
+        <div className="mb-8">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            Post a Job
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
+            Find Your Next{" "}
+            <span className="bg-gradient-to-r from-primary to-[#f04c24] bg-clip-text text-transparent">
+              Great Hire
+            </span>
+          </h1>
+          <p className="mt-2 text-sm font-light text-foreground/60">
+            Fill in the details below to publish your job listing.
+          </p>
+        </div>
+
+        <JobForm companyId={company.id} />
+      </div>
     </div>
   );
 }
