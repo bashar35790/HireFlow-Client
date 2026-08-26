@@ -1,4 +1,4 @@
-import { api } from "@/lib/axios";
+import { api, setAuthToken } from "@/lib/axios";
 import type { ApiResponse, User } from "@/lib/types";
 
 export type RegisterPayload = {
@@ -15,20 +15,26 @@ export type LoginPayload = {
 
 export const authService = {
   async register(payload: RegisterPayload): Promise<User> {
-    const { data } = await api.post<ApiResponse<User>>(
+    const { data } = await api.post<ApiResponse<User & { token?: string }>>(
       "/auth/register",
       payload,
     );
+    if (data.data.token) setAuthToken(data.data.token);
     return data.data;
   },
 
   async login(payload: LoginPayload): Promise<User> {
-    const { data } = await api.post<ApiResponse<User>>("/auth/login", payload);
+    const { data } = await api.post<ApiResponse<User & { token?: string }>>(
+      "/auth/login",
+      payload,
+    );
+    if (data.data.token) setAuthToken(data.data.token);
     return data.data;
   },
 
   async logout(): Promise<void> {
     await api.post<ApiResponse<null>>("/auth/logout");
+    setAuthToken(null);
   },
 
   async getMe(): Promise<User> {
